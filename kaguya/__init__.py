@@ -13,8 +13,6 @@ def create_app(create_db=False):
     # Set configuration
     app.config.from_object(Config)
 
-
-
     #Register Blueprint
     # Need to put blueprint imports here to avoid circular import error
     from kaguya.admins.routes import admins
