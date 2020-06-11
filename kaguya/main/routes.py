@@ -9,4 +9,4 @@ def home():
 
 @main.route('/about')
 def about():
-    return 'About page'
+    return render_template('base.html', title="Home Page")

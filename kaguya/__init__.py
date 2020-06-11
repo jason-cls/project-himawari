@@ -1,9 +1,13 @@
+from kaguya.config import Config
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from kaguya.config import Config
+from flask_login import LoginManager
+from flask_migrate import Migrate
 
-# Extentions
+
+# Extensions
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 
 def create_app(create_db=False):
@@ -13,7 +17,7 @@ def create_app(create_db=False):
     # Set configuration
     app.config.from_object(Config)
 
-    #Register Blueprint
+    # Register Blueprint
     # Need to put blueprint imports here to avoid circular import error
     from kaguya.admins.routes import admins
     from kaguya.anime.routes import anime
@@ -24,10 +28,16 @@ def create_app(create_db=False):
     app.register_blueprint(main)
     app.register_blueprint(users)
 
-    # DB stuff
+    # Login functionality
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+
+    # DB setup
     db.init_app(app)
     if create_db:
         with app.app_context():
             db.create_all()
+
+    migrate = Migrate(app, db)
 
     return app

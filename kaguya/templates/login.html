@@ -32,8 +32,8 @@
                 {{ form.hidden_tag() }}
 
                 <div class="form-label-group">
-                    {{ form.username(class="form-control", type="email", placeholder="Email address") }}
-                    <label for="{{ form.username.id }}">Email address</label>
+                    {{ form.username(class="form-control", type="username", placeholder="Username") }}
+                    <label for="{{ form.username.id }}">Username</label>
                     {% for error in form.username.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
