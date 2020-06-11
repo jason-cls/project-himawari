@@ -1,26 +1,69 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% extends "base.html" %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-{% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="POST" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-{% endblock %}
+    <!-- Login CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
+
+    <!-- Tab Title -->
+    {% if title %}
+    <title>{{ title }} - Himawari - Anime Database and Community</title>
+    {% else %}
+    <title>Himawari - Anime Database and Community</title>
+    {% endif %}
+</head>
+
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto">
+              <h3 class="login-heading mb-4">Welcome back!</h3>
+              <form action="" method="POST" novalidate>
+                {{ form.hidden_tag() }}
+
+                <div class="form-label-group">
+                    {{ form.username(class="form-control", type="email", placeholder="Email address") }}
+                    <label for="{{ form.username.id }}">Email address</label>
+                    {% for error in form.username.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <div class="form-label-group">
+                    {{ form.password(class="form-control", type="password", placeholder="Password") }}
+                    <label for="{{ form.password.id }}">Password</label>
+                    {% for error in form.password.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+                <div class="custom-control custom-checkbox mb-3">
+                    {{ form.remember_me(type="checkbox", class="custom-control-input") }}
+                  <label class="custom-control-label" for="{{ form.remember_me.id }}">Remember me?</label>
+                </div>
+                {{ form.submit(class="btn btn-md btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2", type="submit") }}
+                <a class="btn btn-md btn-secondary btn-block btn-login text-uppercase font-weight-bold mb-2" href="{{ url_for('main.home') }}" role="button">Back to Home</a>
+                <div class="text-center">
+                  <a class="small" href="#">Forgot password?</a>
+                </div>
+                <div class="text-center">
+                    <a class="small" href="{{ url_for('users.register') }}">Need an account?</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
