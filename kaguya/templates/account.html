@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Welcome {{ current_user.username }}!</h2>  
+    <h2>Email: {{ current_user.email }}</h2>  
+    <h2>Profile Pic: {{ current_user.image_file }}</h2>
+    <h2>Date created: {{ current_user.datetime_created }}</h2>    
+{% endblock %}

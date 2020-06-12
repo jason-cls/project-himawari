@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, request, url_for, flash
 from kaguya import db
 from kaguya.models import User
 from kaguya.users.forms import LoginForm, RegisterForm
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 
@@ -49,3 +49,9 @@ def register():
         flash("You are now registered!")
         return redirect(url_for('users.login'))
     return render_template('register.html', form=form, title='Register')
+
+
+@users.route('/account', methods=["GET", "POST"])
+@login_required
+def account():
+    return render_template('account.html', title=current_user.username)
