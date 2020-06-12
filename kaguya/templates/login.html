@@ -30,12 +30,11 @@
               <h3 class="login-heading mb-4">Welcome back!</h3>
               <form action="" method="POST" novalidate>
                 {{ form.hidden_tag() }}
-
                 <div class="form-label-group">
                     {{ form.username(class="form-control", type="text", placeholder="Username") }}
                     <label for="{{ form.username.id }}">Username</label>
                     {% for error in form.username.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
+                        <span style="color: red;">{{ error }}</span>
                     {% endfor %}
                 </div>
 
@@ -43,8 +42,11 @@
                     {{ form.password(class="form-control", type="password", placeholder="Password") }}
                     <label for="{{ form.password.id }}">Password</label>
                     {% for error in form.password.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
+                        <span style="color: red;">{{ error }}</span>
                     {% endfor %}
+                    {% if login_error  %}
+                        <span style="color: red;">{{ login_error }}</span>
+                    {% endif %}
                 </div>
 
                 <div class="custom-control custom-checkbox mb-3">
