@@ -20,7 +20,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(20), unique=False, nullable=False)
     password_hash = db.Column(db.String(128))
     image_file = db.Column(db.String(20), unique=False, nullable=False, 
-        default="profile-default.jpg")
+        default="profile-default.png")
     email = db.Column(db.String(100), unique=True, nullable=False)
     reviews = db.relationship('Review', backref='user', lazy=True)
     anime_list = db.relationship('UserAnime', backref='user', lazy=True)
@@ -36,6 +36,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f"User('username: {self.username}', 'email: {self.email}',\
         'datetime_created: {self.datetime_created}')"
+
 
 class UserAnime(db.Model):
     # many to one with users
@@ -53,6 +54,7 @@ class UserAnime(db.Model):
         'user_id: {self.user_id}', 'anime_id: {self.anime_id}'\
         'datetime_created: {self.datetime_created}')"
 
+
 class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datetime_created = db.Column(db.DateTime, nullable=False,
@@ -66,6 +68,7 @@ class Anime(db.Model):
     def __repr__(self):
         return f"Anime('title: {self.title}', 'rating: {self.rating}',\
         'datetime_created: {self.datetime_created}')"
+
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
