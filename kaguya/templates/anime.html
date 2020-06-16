@@ -1,4 +1,7 @@
 <head>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Anime Page CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='anime.css') }}">
 </head>
@@ -65,14 +68,93 @@
             <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">School</button>
             <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">Seinen</button>
             <hr>
-            <h5 style="padding-top: 15px">Synopsis</h5>
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10 text-right">
+                    <!-- STATUS - Dropdown button -->
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Displayed Status
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Watching</a>
+                            <a class="dropdown-item active" href="#">Completed</a>
+                            <a class="dropdown-item" href="#">On Hold</a>
+                            <a class="dropdown-item" href="#">Dropped</a>
+                            <a class="dropdown-item" href="#">Plan to Watch</a>
+                        </div>
+                    </div>
+                    <!-- USER RATING - Dropdown button -->
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            ⭐ Rating
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">10</a>
+                            <a class="dropdown-item" href="#">9</a>
+                            <a class="dropdown-item active" href="#">8</a>
+                            <a class="dropdown-item" href="#">7</a>
+                            <a class="dropdown-item" href="#">6</a>
+                            <a class="dropdown-item" href="#">5</a>
+                            <a class="dropdown-item" href="#">4</a>
+                            <a class="dropdown-item" href="#">3</a>
+                            <a class="dropdown-item" href="#">2</a>
+                            <a class="dropdown-item" href="#">1</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-heart"> Favorite</i></button>
+                </div>
+            </div>
+
+            <h6 style="padding-left:25px">Episode</h6>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="input-group input-group-sm">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                  <i class="fa fa-minus" aria-hidden="true"></i>
+                              </button>
+                          </span>
+                          <input type="text" name="quant[1]" class="form-control input-number" value="9" min="0" max="10">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                              </button>
+                          </span>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <h6 style="text-align:center">Completion Status</h6>
+                    <div class="progress bg-secondary">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" >&nbsp; 9 / 12 episodes</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h5 style="padding-top: 25px">Synopsis</h5>
             <p>After a slow but eventful summer vacation, Shuchiin Academy's second term is now starting in full force. As August transitions into September, Miyuki Shirogane's birthday looms ever closer, leaving Kaguya Shinomiya in a serious predicament as to how to celebrate it. Furthermore, the tenure of the school's 67th student council is coming to an end. Due to the council members being in different classes, the only time Kaguya and Miyuki have to be together will soon disappear, putting all of their cunning plans at risk.
 
 A long and difficult election that will decide the fate of the new student council awaits, as multiple challengers fight for the coveted title of president.</p>
             <hr>
 
-            <h5 style="padding-top: 15px; padding-bottom: 10px">Reviews</h5>
-            <!-- Single Comment -->
+            <h5 style="padding-top: 15px;">User Reviews</h5>
+
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <h6 class="card-header">Leave a Review</h6>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                          <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Single Review -->
             <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                 <div class="media-body">
@@ -83,8 +165,6 @@ A long and difficult election that will decide the fate of the new student counc
 
         </div>
     </div>
-
-
 
 </div>
 
