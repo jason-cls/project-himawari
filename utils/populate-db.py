@@ -15,15 +15,17 @@ class PopulateDB():
     Populate DB with scraped or generated data
     :param new_db: if true, will delete curret db and create a new one
     :param path: path to anime.csv file
+    :param user_limit: number of fake users to generate
+    :param anime_limit: number of animes to import from csv file. If none,
+    will import all entries.
     '''
-    def __init__(self, path, anime_limit, user_limit, new_db=False):
+    def __init__(self, path, user_limit, anime_limit=None, new_db=False):
         self.logger = logging.getLogger(__name__)
         self.new_db = new_db
         self.path = path
         self.anime_limit = anime_limit
         self.user_limit = user_limit
         self.gen = DocumentGenerator()
-
         # Create new db delete old one
         if new_db:
             self.__create_db()
@@ -33,22 +35,21 @@ class PopulateDB():
         else:
             self.app = create_app(create_db=False)
             self.logger.info("No new db file created")
-        
 
     def popAll(self):
         # Populate both anime and user tables
         self.popAnime()
         self.popFakeUsers()
 
-
     def popAnime(self):
         # Populate anime table
         self.logger.info("Populating Anime DB...")
-
         with self.app.app_context():
             # Load data from csv
             self.logger.info("Getting data from %s", self.path)
             df_anime = pd.read_csv(self.path)
+            self.logger.info("Number of data entries found in %s: %s", 
+                self.path, len(df_anime))
             for index, row in df_anime.iterrows():
                 anime = Anime(
                     title=row['title'],
@@ -66,22 +67,18 @@ class PopulateDB():
                 # Log
                 if (index)%100==0:
                     self.logger.info("Number of anime-rows added to session: %s", index)
-                if index==self.anime_limit:
+                # Break if reached limit
+                if index==(self.anime_limit-1):
                     break
-
             db.session.commit()
             self.logger.info("Anime DB updated!")
-
 
     def popFakeUsers(self):
         # Get generator for users
         self.logger.info("Populating User DB with fake users...")
-
         self.__get_user_gen()
         self.__get_useranime_gen()
         accounts = self.user_gen.documents(self.user_limit)
-
-
         with self.app.app_context():
             for index, account in enumerate(accounts):
                 user = User(
@@ -92,33 +89,26 @@ class PopulateDB():
                     self.logger.info("Number of user-rows added to session: %s", index)
                 db.session.add(user)
                 db.session.commit()
-
                 # Populate random reviews
                 anime_ids = [randint(1,self. anime_limit) for iter in range(randint(5,50))]
                 anime_ids = list(set(anime_ids))
                 userAnimes = self.useranime_gen.documents(len(anime_ids))
-
                 for (userAnimeInfo, anime_id) in zip(userAnimes, anime_ids):
                     review = Review(
                         content=self.gen.paragraph(),
                         rating=randint(0, 5),
                         user_id=index+1,
-                        anime_id=anime_id
-                        )
-
+                        anime_id=anime_id)
                     userAnime = UserAnime(
                         status=userAnimeInfo['status'],
                         episodes_watched=userAnimeInfo['episodes_watched'],
                         user_id=index+1 ,
-                        anime_id=anime_id,
-                        )
-
+                        anime_id=anime_id,)
                     db.session.add(userAnime)
                     db.session.add(review)
                     db.session.commit()
-
+            self.__count_db()
     #--------------------------Private Functions-------------------------------#
-
     def __create_db(self):
         # Delete and make new db
         self.logger.info("WARNING: Deleting current db...")
@@ -134,13 +124,11 @@ class PopulateDB():
         # Create generator for users
         self.logger.info('Creating user generator...')
         self.user_gen = DocumentGenerator()
-
         template = {
             'username': {'typemap': 'name', 'unique': True, 'tries': 10},
             'email': {'typemap': 'email', 'unique': True, 'tries': 10},
             'password': 'small_int'
         }
-
         self.user_gen.set_template(template)
 
     def __get_useranime_gen(self):
@@ -154,25 +142,26 @@ class PopulateDB():
         }
         self.useranime_gen.set_template(template)
 
-    def __check_db(self):
+    def __count_db(self):
         # count and check if db is okay
-        print('To do later')
-
+        self.logger.info('Counting DB...')
+        self.logger.info('DB User Count: %s', User.query.count())
+        self.logger.info('DB Anime Count: %s', Anime.query.count())
+        self.logger.info('DB Review Count: %s', Review.query.count())
+        self.logger.info('DB UserAnime Count: %s', UserAnime.query.count())
 
 if __name__ == "__main__":
+
     # Logs
     logging.config.fileConfig('log/logging.conf')
     logger = logging.getLogger(__name__)
     logger.info("Running populate-db.py...")
-    
     path = os.path.join('data', 'anime.csv')
-    
     popDB=PopulateDB(
         path=path,
         new_db=True,
         anime_limit=1000, 
         user_limit=200)
-
     popDB.popAll()
     
 
