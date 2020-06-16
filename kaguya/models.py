@@ -60,7 +60,7 @@ class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datetime_created = db.Column(db.DateTime, nullable=False,
         default=datetime.utcnow)
-    title = db.Column(db.String(60), unique=True, nullable=False)
+    title = db.Column(db.String(60), unique=False, nullable=False)
     type = db.Column(db.String(10), nullable=True, default='TV')
     episodes = db.Column(db.Float, nullable=True, default=0.)
     rating = db.Column(db.String(50), nullable=True)
