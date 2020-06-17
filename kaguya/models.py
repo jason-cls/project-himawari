@@ -13,6 +13,7 @@ likes = db.Table('likes',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('anime_id', db.Integer, db.ForeignKey('anime.id'), primary_key=True))
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datetime_created = db.Column(db.DateTime, nullable=False,
@@ -59,8 +60,15 @@ class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datetime_created = db.Column(db.DateTime, nullable=False,
         default=datetime.utcnow)
-    title = db.Column(db.String(50), unique=True, nullable=False)
-    rating = db.Column(db.Float, nullable=True, default=0.)
+    title = db.Column(db.String(60), unique=False, nullable=False)
+    type = db.Column(db.String(10), nullable=True, default='TV')
+    episodes = db.Column(db.Float, nullable=True, default=0.)
+    rating = db.Column(db.String(50), nullable=True)
+    score = db.Column(db.Float, nullable=True, default=0.)
+    status = db.Column(db.String(20), default='Finished')
+    premiered = db.Column(db.String(), nullable=True)
+    genres = db.Column(db.String(), nullable=True)
+    synopsis = db.Column(db.Text, nullable=True)
     image_file = db.Column(db.String(20), unique=False, nullable=False, default="anime-default.jpg")
     reviews = db.relationship('Review', backref='anime', lazy=True)
     user_animes = db.relationship('UserAnime', backref='anime', lazy=True)

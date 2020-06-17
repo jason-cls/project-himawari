@@ -45,6 +45,8 @@ $ flask db init
     ```
     After downgrading, **DELETE** the migration script if the newest migration isn't as expected.
    
-### When to use database migrations:
+#### When to use database migrations:
 When there are structural changes to the database schema (e.g. added/removed columns or tables or relationships).
 
+### How to use setup.py
+Will add instructions later
