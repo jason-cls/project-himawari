@@ -210,3 +210,5 @@ dmypy.json
 # setup.py stuff
 .myproject.egg-info
 myproject.egg-info/
+.shirogane.egg-info
+shirogane.egg-info/
