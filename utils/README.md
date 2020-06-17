@@ -23,7 +23,7 @@ Arguments:
   -d, --db              Will delete current DB and create new one
 ```
 
-Example of how to run:
+Example of how to run from /utils:
 ```sh
 python populate-db.py -a 500 -u 100 -d
 ```

@@ -166,7 +166,9 @@ def str2bool(v):
 
 if __name__ == "__main__":
     # Logs
-    logging.config.fileConfig('log/logging.conf')
+    logger_path = os.path.join(os.path.dirname(__file__), 'log', 'logging.conf')
+    logging.config.fileConfig(logger_path)
+    #logging.config.fileConfig('log/logging.conf')
     logger = logging.getLogger(__name__)
     logger.info("Running populate-db.py...")
 
