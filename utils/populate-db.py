@@ -1,3 +1,4 @@
+import argparse
 import os
 import logging
 import logging.config
@@ -150,18 +151,47 @@ class PopulateDB():
         self.logger.info('DB Review Count: %s', Review.query.count())
         self.logger.info('DB UserAnime Count: %s', UserAnime.query.count())
 
-if __name__ == "__main__":
+'''
+def str2bool(v):
+    # For boolean of argparse (Create new db)
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+'''
 
+if __name__ == "__main__":
     # Logs
     logging.config.fileConfig('log/logging.conf')
     logger = logging.getLogger(__name__)
     logger.info("Running populate-db.py...")
-    path = os.path.join('data', 'anime.csv')
+
+    # Arg Parser stuff
+    parser = argparse.ArgumentParser(description="Add users and anime to DB")
+    parser.add_argument("-a", "--anime", type=int,
+        help="Number of anime rows to add to DB")
+    parser.add_argument("-u", "--user", type=int,
+        help="Number of fake user-rows to add to DB")
+    parser.add_argument("-d", "--db", action="store_true",
+        help="Deletes old DB then creates new db")
+
+    args = parser.parse_args()
+    logger.info("Settings:")
+    logger.info("Create new DB?: %s", args.db)
+    logger.info("Anime rows to add: %s", args.anime)
+    logger.info("Fake users rows to add?: %s", args.user)
+
     popDB=PopulateDB(
-        path=path,
-        new_db=True,
-        anime_limit=1000, 
-        user_limit=200)
+        path=os.path.join('data', 'anime.csv'),
+        new_db=args.db,
+        anime_limit=args.anime, 
+        user_limit=args.user)
+
+    # Run populate db script
     popDB.popAll()
     
 
