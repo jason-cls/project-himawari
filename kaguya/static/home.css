@@ -1,0 +1,49 @@
+.carousel-inner > .carousel-item > .col-xs-3 > img {
+  height: 240px;
+  padding: 0px;
+  margin: auto;
+}
+
+.carousel-inner > .carousel-item {
+   height: 300px;
+}
+
+.col-md-3{
+  display: inline-block;
+  margin-left:-4px;
+}
+.col-md-3 img{
+  width:100%;
+  height:100%;
+}
+body .carousel-indicators li{
+  background-color:#2d2c33;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+body .carousel-indicators{
+  bottom: -20px;
+}
+
+body .no-padding{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(100%);
+}
+
+.carousel-control-prev {
+  margin-left: -60px;
+}
+
+.carousel-control-next {
+  margin-right: -60px;
+}
+
+.flex-fixed-width-item {
+    flex: 0 0 750px;
+}
