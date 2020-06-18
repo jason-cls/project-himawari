@@ -11,6 +11,9 @@
     <!-- Kaguya's CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Tab Title -->
     {% if title %}
     <title>{{ title }} - Himawari - Anime Database and Community</title>
@@ -19,45 +22,67 @@
     {% endif %}
 </head>
 
-<body> 
+<body style="background: rgb(255, 255, 255);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 1.0)), url('https://static.zerochan.net/Kazami.Yuuka.full.1287759.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;">
 <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">Kaguya Net</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.home') }}" style="padding-right:30px">Kaguya Net</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="{{ url_for('main.home') }}">Home
-                    <span class="sr-only">(current)</span>
-                  </a>
+              <a class="nav-link" href="{{ url_for('main.home') }}">
+                  <i class="fa fa-home" aria-hidden="true"></i> Home
+                  <span class="sr-only">(current)</span>
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
+              <a class="nav-link" href="{{ url_for('main.about') }}">
+                  <i class="fa fa-info-circle" aria-hidden="true"></i> About
+              </a>
             </li>
             {% if current_user.is_anonymous %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+              <a class="nav-link" href="{{ url_for('users.login') }}">
+                  <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+              </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+            <li class="nav-item" style="padding-right:30px;">
+              <a class="nav-link" href="{{ url_for('users.register') }}">
+                  <i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up
+              </a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.account') }}">My Account</a>
+              <a class="nav-link" href="{{ url_for('users.account') }}">
+                  <i class="fa fa-user" aria-hidden="true"></i> My Account
+              </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+            <li class="nav-item" style="padding-right:30px;">
+              <a class="nav-link" href="{{ url_for('users.logout') }}">
+                  <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+              </a>
             </li>
             {% endif %}
+
+
           </ul>
+            <form class="form-inline">
+                <input class="form-control-sm mr-sm-2" type="search" placeholder="Search Anime" aria-label="Search">
+                <button class="btn btn-dark btn-sm" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
         </div>
-      </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
+
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-12">
@@ -74,6 +99,7 @@
         </div>
       </div>
     </main>
+
 
     <!-- Footer -->
     <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
