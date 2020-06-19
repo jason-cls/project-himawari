@@ -1,5 +1,9 @@
 {% extends 'admin/master.html' %}
 
 {% block body %}
-  <a href="{{ url_for('main.home') }}">Back to Home</a>
+    <a href="{{ url_for('main.home') }}"><h1>Back to home page!</h1></a>
+    <p>If you can't see any tabs, you should login first!</p>
+    <a href="{{ url_for('users.login') }}">Login Here</a> 
+
+
 {% endblock %}
