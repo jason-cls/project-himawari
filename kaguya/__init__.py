@@ -28,10 +28,12 @@ def create_app(create_db=False):
     from kaguya.anime.routes import anime
     from kaguya.main.routes import main
     from kaguya.users.routes import users
+    from kaguya.errors.handlers import errors
     app.register_blueprint(admin_bp)
     app.register_blueprint(anime)
     app.register_blueprint(main)
     app.register_blueprint(users)
+    app.register_blueprint(errors)
 
     # Login functionality
     login_manager.init_app(app)
@@ -44,6 +46,5 @@ def create_app(create_db=False):
             db.create_all()
 
     migrate = Migrate(app, db)
-
 
     return app
