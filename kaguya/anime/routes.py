@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from kaguya.models import Anime
 
 
-anime = Blueprint('anime', __name__)
+anime = Blueprint('anime_bp', __name__)
 
 
 # For layout testing

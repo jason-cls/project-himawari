@@ -6,7 +6,7 @@ import pandas as pd
 from essential_generators import DocumentGenerator
 from random import randint
 from kaguya import db, create_app
-from kaguya.models import Anime, User, UserAnime, Review
+from kaguya.models import Anime, User, UserAnime, Review, Role
 
 # Reference for data generators: 
 # https://pypi.org/project/essential-generators/0.9.2/
@@ -40,12 +40,16 @@ class PopulateDB():
     def popAll(self):
         # Populate both anime and user tables
         self.popAnime()
+        self.__add_admin()
         self.popFakeUsers()
+
 
     def popAnime(self):
         # Populate anime table
         self.logger.info("Populating Anime DB...")
         with self.app.app_context():
+            Role.insert_roles()
+            self.logger.info(Role.query.all())
             # Load data from csv
             self.logger.info("Getting data from %s", self.path)
             df_anime = pd.read_csv(self.path)
@@ -120,6 +124,16 @@ class PopulateDB():
             self.logger.info('Deleted db at %s', self.db_file)
         except:
             self.logger.error('Failed to delete the DB! at %s', self.db_file)
+    
+    def __add_admin(self):
+        self.logger.info('Adding admin to the db')
+        with self.app.app_context():
+            user = User(
+                    username="admin",
+                    email="admin@admin.com" )
+            user.set_password('admin')
+            db.session.add(user)
+            db.session.commit()
 
     def __get_user_gen(self):
         # Create generator for users
