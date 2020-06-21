@@ -1,4 +1,5 @@
 import os.path as op
+from kaguya.models import User
 from pathlib import Path
 from flask import redirect, url_for
 from flask_login import current_user
@@ -6,15 +7,18 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.fileadmin import FileAdmin
 
 class UserView(ModelView):
-    column_filters = ('id', 'username', 'email')
+    column_filters = ('id', 'username', 'email', 'role')
     column_searchable_list = ['id', 'username', 'email', 'image_file', 
         'datetime_created'] 
-    column_list = ('id', 'username', 'email', 'image_file', 'datetime_created')
+    column_list = ('id', 'username', 'email', 'image_file','role', 'datetime_created')
     page_size = 10
 
     def is_accessible(self):
-        return current_user.is_authenticated
-
+        if current_user.is_authenticated:
+            user = User.query.filter_by(username=current_user.username).first()
+            return user.is_administrator()
+        else:
+            return False
     def inaccessible_callback(self):
         return redirect(url_for('users.login'))
 
@@ -27,7 +31,12 @@ class AnimeView(ModelView):
     page_size = 10
 
     def is_accessible(self):
-        return current_user.is_authenticated
+        if current_user.is_authenticated:
+            user = User.query.filter_by(username=current_user.username).first()
+            print(user.is_administrator())
+            return user.is_administrator()
+        else:
+            return False
 
     def inaccessible_callback(self):
         return redirect(url_for('users.login'))
@@ -40,7 +49,12 @@ class ReviewView(ModelView):
     page_size = 10
 
     def is_accessible(self):
-        return current_user.is_authenticated
+        if current_user.is_authenticated:
+            user = User.query.filter_by(username=current_user.username).first()
+            return user.is_administrator()
+        else:
+            return False
+
     def inaccessible_callback(self):
         return redirect(url_for('users.login'))
 
@@ -52,15 +66,23 @@ class UserAnimeView(ModelView):
     page_size = 10
 
     def is_accessible(self):
-        return current_user.is_authenticated
+        if current_user.is_authenticated:
+            user = User.query.filter_by(username=current_user.username).first()
+            return user.is_administrator()
+        else:
+            return False
     def inaccessible_callback(self):
-
         return redirect(url_for('users.login'))
 
 
 class StaticFileView(FileAdmin):
     def is_accessible(self):
-        return current_user.is_authenticated
+        if current_user.is_authenticated:
+            user = User.query.filter_by(username=current_user.username).first()
+            return user.is_administrator()
+        else:
+            return False
+
     def inaccessible_callback(self):
 
         return redirect(url_for('users.login'))
