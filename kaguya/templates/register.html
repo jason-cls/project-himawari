@@ -7,11 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Register CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
-
-    <!-- Font Awesome -->
     <link rel="stylesheet"  href="{{ url_for('static', filename='register.css') }}">
 
     <!-- Tab Title -->
@@ -68,8 +68,8 @@
               {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase", type="submit") }} 
               <a class="d-block text-center mt-2 small" href="{{ url_for('users.login') }}">Sign In</a>
               <hr class="my-4">
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
-              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook</button>
+              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fa fa-google" aria-hidden="true"></i> Sign up with Google</button>
+              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fa fa-facebook" aria-hidden="true"></i></i> Sign up with Facebook</button>
             </form>
           </div>
         </div>
