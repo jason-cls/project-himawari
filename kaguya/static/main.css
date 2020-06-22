@@ -1,5 +1,5 @@
 body {
-  background: #fafafa;
+  background: #edf1f5;
   color: #333333;
   margin-top: 5rem;
 }
@@ -28,8 +28,12 @@ h3.display-4 {
   font-weight: 500;
 }
 
+.navbar {
+    margin-bottom: 0px !important;
+}
+
 .content-section {
-  background: #ffffff;
+  background: #edf1f5;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
