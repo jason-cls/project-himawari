@@ -15,8 +15,7 @@ class UserView(ModelView):
 
     def is_accessible(self):
         if current_user.is_authenticated:
-            user = User.query.filter_by(username=current_user.username).first()
-            return user.is_administrator()
+            return current_user.is_administrator()
         else:
             return False
     def inaccessible_callback(self):
@@ -32,8 +31,7 @@ class AnimeView(ModelView):
 
     def is_accessible(self):
         if current_user.is_authenticated:
-            user = User.query.filter_by(username=current_user.username).first()
-            return user.is_administrator()
+            return current_user.is_administrator()
         else:
             return False
 
@@ -49,8 +47,7 @@ class ReviewView(ModelView):
 
     def is_accessible(self):
         if current_user.is_authenticated:
-            user = User.query.filter_by(username=current_user.username).first()
-            return user.is_administrator()
+            return current_user.is_administrator()
         else:
             return False
 
@@ -66,8 +63,7 @@ class UserAnimeView(ModelView):
 
     def is_accessible(self):
         if current_user.is_authenticated:
-            user = User.query.filter_by(username=current_user.username).first()
-            return user.is_administrator()
+            return current_user.is_administrator()
         else:
             return False
     def inaccessible_callback(self):
@@ -77,11 +73,9 @@ class UserAnimeView(ModelView):
 class StaticFileView(FileAdmin):
     def is_accessible(self):
         if current_user.is_authenticated:
-            user = User.query.filter_by(username=current_user.username).first()
-            return user.is_administrator()
+            return current_user.is_administrator()
         else:
             return False
 
     def inaccessible_callback(self):
-
         return redirect(url_for('users.login'))
