@@ -21,324 +21,28 @@
   <div class="col-md-2"></div>
   <div class="col-md-6">
     <!--SEASONAL-->
-    <div class="container-fluid">
-      <table style="width:109%;">
-        <tr>
-          <td><h2 class="pt-4 mb-4">Current Seasonal Anime</h2></td>
-          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
-        </tr>
-      </table>
-
-      <div class="row">
-        <div>
-          <div id="demo" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
-
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-              <li data-target="#demo" data-slide-to="0" class="active"></li>
-              <li data-target="#demo" data-slide-to="1"></li>
-              <li data-target="#demo" data-slide-to="2"></li>
-            </ul>
-
-            <!-- The slideshow -->
-            <div class="container-fluid carousel-inner no-padding">
-              <div class="carousel-item active">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption Caption Caption</b></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/2/75259.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/10/8380.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-              </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% set carouselName = 'seasonal' %}
+    {% include '_carousel.html' %}
     <hr>
-
     <!--POPULAR-->
-    <div class="container-fluid">
-      <table style="width:120%;">
-        <tr>
-          <td><h2 class="pt-4 mb-4">Popular Anime</h2></td>
-          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
-        </tr>
-      </table>
-      <div class="row">
-        <div>
-          <div id="popular" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
-
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-              <li data-target="#popular" data-slide-to="0" class="active"></li>
-              <li data-target="#popular" data-slide-to="1"></li>
-              <li data-target="#popular" data-slide-to="2"></li>
-            </ul>
-
-            <!-- The slideshow -->
-            <div class="container-fluid carousel-inner no-padding">
-              <div class="carousel-item active">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption Caption Caption</b></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/2/75259.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/10/8380.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-              </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#popular" data-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#popular" data-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% set carouselName = 'popular' %}
+    {% include '_carousel.html' %}
     <hr>
-
     <!--TOP UPCOMING-->
-    <div class="container-fluid">
-      <table style="width:111%;">
-        <tr>
-          <td><h2 class="pt-4 mb-4">Top Upcoming Anime</h2></td>
-          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
-        </tr>
-      </table>
-      <div class="row">
-        <div>
-          <div id="topUpcoming" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
-
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-              <li data-target="#topUpcoming" data-slide-to="0" class="active"></li>
-              <li data-target="#topUpcoming" data-slide-to="1"></li>
-              <li data-target="#topUpcoming" data-slide-to="2"></li>
-            </ul>
-
-            <!-- The slideshow -->
-            <div class="container-fluid carousel-inner no-padding">
-              <div class="carousel-item active">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption Caption Caption</b></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/2/75259.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b></div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/10/8380.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
-                  Caption
-                </div>
-              </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#topUpcoming" data-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#topUpcoming" data-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% set carouselName = 'top' %}
+    {% include '_carousel.html' %}
     &nbsp;
   </div>
 
   <!--RIGHT SIDEBAR-->
   <div class="col-md-3">
-    <div class="container-fluid"
+    <div class="container-fluid">
     <!--USER REVIEWS-->
     <div class="card mt-4">
       <h5 class="card-header"><i class="fa fa-comment" aria-hidden="true"></i> Latest Reviews </h5>
-<!--      <div class="card-body">-->
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <h6 class="media-heading">
-              <p>
-                <img src="http://placehold.it/50x50" style="float:left; width:auto; height:4vh; margin-right:10px; border-radius:50%">
-                Username
-                <br>
-                <small>
-                    reviewed <a href="#">Anime Title</a>
-                </small>
-              </p>
-            </h6>
-            <div class="overflow">
-              <p>
-                <img src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" style="float:left; width:auto; height:7vh; margin-right:15px;">
-                Vivamus pulvinar mauris eu placerat blandit. In euismod tellus vel ex vestibulum congue cerat blandit.
-                In euismod tellus vel ex vestibulum conguecerat blandit. In euismod tellus vel ex vestibulum conguecer
-                at blandit. In euismod tellus vel ex vestibulum conguecerat blandit. In euismod tellus vel.
-              </p>
-            </div>
-          </li>
-
-          <li class="list-group-item">
-            <h6 class="media-heading">
-              <p>
-                <img class="img-responsive" src="http://placehold.it/50x50" style="float:left; width:auto; height:4vh; margin-right:10px; border-radius:50%">
-                Username
-                <br>
-                <small>
-                    reviewed <a href="#">Anime Title</a>
-                </small>
-              </p>
-            </h6>
-            <div class="overflow">
-              <p>
-                <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" style="float:left; width:auto; height:7vh; margin-right:15px;">
-                Vivamus pulvinar mauris eu placerat blandit. In euismod tellus vel ex
-              </p>
-            </div>
-          </li>
+          {% include '_homeReview.html' %}
+          {% include '_homeReview.html' %}
         </ul>
         <a href="#" class="btn btn-dark btn-block btn-sm">More Reviews</a>
     </div>
@@ -346,6 +50,5 @@
   </div>
   <div class="col-md-1"></div>
 </div>
-
 
 {% endblock %}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--Carousel sub-template-->
+
+<div class="container-fluid">
+  <table style="width:109%;">
+    <tr>
+      <td><h2 class="pt-4 mb-4">Current Seasonal Anime</h2></td>
+      <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+    </tr>
+  </table>
+
+  <div class="row">
+    <div>
+      <div id="{{ carouselName }}" class="carousel slide carousel-fade" data-ride="carousel" data-interval="3000">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+          <li data-target="#{{ carouselName }}" data-slide-to="0" class="active"></li>
+          <li data-target="#{{ carouselName }}" data-slide-to="1"></li>
+          <li data-target="#{{ carouselName }}" data-slide-to="2"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="container-fluid carousel-inner no-padding">
+          <div class="carousel-item active">
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption Caption Caption</b></div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/2/75259.jpg" >
+              <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b></div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/10/8380.jpg" >
+              <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>Caption</b> </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" >
+              Caption
+            </div>
+          </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#{{ carouselName }}" data-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#{{ carouselName }}" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
