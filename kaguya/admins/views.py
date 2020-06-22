@@ -33,7 +33,6 @@ class AnimeView(ModelView):
     def is_accessible(self):
         if current_user.is_authenticated:
             user = User.query.filter_by(username=current_user.username).first()
-            print(user.is_administrator())
             return user.is_administrator()
         else:
             return False
