@@ -16,21 +16,47 @@
   </p>
 </div>
 
-
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-6">
     <!--SEASONAL-->
     {% set carouselName = 'seasonal' %}
-    {% include '_carousel.html' %}
+    {% set animeGroup = seasonal_anime %}
+    <div class="container-fluid">
+      <table style="width:109%;">
+        <tr>
+          <td><h2 class="pt-4 mb-4">Current Seasonal Anime</h2></td>
+          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+        </tr>
+      </table>
+      {% include '_carousel.html' %}
+    </div>
     <hr>
     <!--POPULAR-->
     {% set carouselName = 'popular' %}
-    {% include '_carousel.html' %}
+    {% set animeGroup = popular_anime %}
+    <div class="container-fluid">
+      <table style="width:120%;">
+        <tr>
+          <td><h2 class="pt-4 mb-4">Popular Anime</h2></td>
+          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+        </tr>
+      </table>
+      {% include '_carousel.html' %}
+    </div>
     <hr>
     <!--TOP UPCOMING-->
-    {% set carouselName = 'top' %}
-    {% include '_carousel.html' %}
+    {% set carouselName = 'upcoming' %}
+    {% set animeGroup = upcoming_anime %}
+    <div class="container-fluid">
+      <table style="width:110.5%;">
+        <tr>
+          <td><h2 class="pt-4 mb-4">Top Upcoming Anime</h2></td>
+          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+        </tr>
+      </table>
+      {% include '_carousel.html' %}
+    </div>
     &nbsp;
   </div>
 
@@ -41,8 +67,9 @@
     <div class="card mt-4">
       <h5 class="card-header"><i class="fa fa-comment" aria-hidden="true"></i> Latest Reviews </h5>
         <ul class="list-group list-group-flush">
-          {% include '_homeReview.html' %}
-          {% include '_homeReview.html' %}
+          {% for review in recent_reviews %}
+            {% include '_homeReview.html' %}
+          {% endfor %}
         </ul>
         <a href="#" class="btn btn-dark btn-block btn-sm">More Reviews</a>
     </div>
