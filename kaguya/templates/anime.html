@@ -12,60 +12,62 @@
     <div class="row">
         <!--sidebar-->
         <div class="col-md-3">
-            <img class="img-responsive" src="https://cdn.myanimelist.net/images/anime/1764/106659.jpg" style="padding-bottom: 15px" width="100%">
+            <img class="img-responsive" src="{{ anime.image_file }}" style="padding-bottom: 15px" width="100%">
             <h6 style="padding-top: 10px">Alternative Titles</h6>
             <p style="text-align:left; font-size:12px">
-                <b>English:</b> Kaguya-sama: Love is War Season 2
+                <b>English:</b> TEMP PLACEHOLDER
                 <br>
-                <b>Japanese:</b> かぐや様は告らせたい？～天才たちの恋愛頭脳戦～
+                <b>Japanese:</b> TEMP PLACEHOLDER
             </p>
             <hr>
             <h6 style="padding-top: 10px">Information</h6>
             <table style="width:100%; font-size:12px">
                 <tr>
                     <td>Score</td>
-                    <td class="align-right"><b>⭐8.85/10</b></td>
+                    <td class="align-right"><b>⭐{{ anime.score }}/10</b></td>
                 </tr>
                 <tr>
                     <td>Type</td>
-                    <td class="align-right"><b>TV</b></td>
+                    <td class="align-right"><b>{{ anime.type }}</b></td>
                 </tr>
                 <tr>
                     <td>Episodes</td>
-                    <td class="align-right"><b>12</b></td>
+                    <td class="align-right"><b>{{ anime.episodes }}</b></td>
                 </tr>
                 <tr>
                     <td>Status</td>
-                    <td class="align-right"><b>Currently Airing</b></td>
+                    <td class="align-right"><b>{{ anime.status }}</b></td>
                 </tr>
                 <tr>
                     <td>Rating</td>
-                    <td class="align-right"><b>PG-13 - Teens 13 or older</b></td>
+                    <td class="align-right"><b>{{ anime.rating }}</b></td>
                 </tr>
                 <tr>
                     <td>Premiered</td>
-                    <td class="align-right"><b>Spring 2020</b></td>
+                    <td class="align-right"><b>{{ anime.premiered }}</b></td>
                 </tr>
                 <tr>
                     <td>Broadcast</td>
-                    <td class="align-right"><b>Saturdays at 23:30 (JST)</b></td>
+                    <td class="align-right"><b>TEMP PLACEHOLDER</b></td>
                 </tr>
 
                 <tr>
                     <td>Genres</td>
-                    <td class="align-right"><b>Comedy, Psychological, Romance, School, Seinen</b></td>
+                    <td class="align-right">
+                        {% set genres = anime.genres.strip('[]').replace("'", "").strip(',') %}
+                        <b>{{ genres }}</b>
+                    </td>
                 </tr>
             </table>
             <hr>
         </div>
         <!--content-->
         <div class="col-md-9">
-            <h4 style="padding-bottom: 20px">Kaguya-sama wa Kokurasetai?: Tensai-tachi no Renai Zunousen</h4>
-            <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">Comedy</button>
-            <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">Psychological</button>
-            <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">Romance</button>
-            <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">School</button>
-            <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">Seinen</button>
+            <h4 style="padding-bottom: 20px">{{ anime.title }}</h4>
+            {% set genresList = genres.split(", ") %}
+            {% for genre in genresList %}
+            <button type="button" class="btn btn-dark btn-sm" style="font-size: 0.8em">{{ genre }}</button>
+            {% endfor %}
             <hr>
 
             <div class="row">
@@ -126,7 +128,7 @@
                 <div class="col-md-10">
                     <h6 style="text-align:center">Completion Status</h6>
                     <div class="progress bg-secondary">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" >&nbsp; 9 / 12 episodes</div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" >&nbsp; 9 / {{ anime.episodes }} episodes</div>
                     </div>
                 </div>
             </div>
@@ -153,15 +155,11 @@ A long and difficult election that will decide the fate of the new student counc
                 </div>
             </div>
 
-            <!-- Single Review -->
-            <div class="media mb-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h6 class="mt-0">Commenter Name</h6>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-            </div>
-
+            <!-- User Reviews -->
+            {% for review in reviews %}
+                {% include '_animeReview.html' %}
+            <hr>
+            {% endfor %}
         </div>
     </div>
 
