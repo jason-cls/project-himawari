@@ -63,13 +63,16 @@ def register():
 @login_required
 def account():
     form = UpdateAccountForm()
-
     if form.validate_on_submit():
         if form.image_file.data:
             picture_file = save_picture(form.image_file.data)
             current_user.image_file = picture_file
-        if form.new_password:
+        if form.new_password.data:
             current_user.set_password(form.new_password.data)
+        elif (current_user.username == form.username.data) and \
+            (current_user.email == form.email.data) and not(form.image_file.data):
+            flash('No changes made to your account!', 'warning')
+            return redirect(url_for('users.account'))
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
