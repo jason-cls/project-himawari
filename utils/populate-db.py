@@ -58,12 +58,14 @@ class PopulateDB():
             for index, row in df_anime.iterrows():
                 anime = Anime(
                     title=row['title'],
+                    title_japanese=row['title_japanese'],
                     type=row['type'],
                     episodes=float(row['episodes']),
                     rating=row['rating'],
                     score=float(row['score']),
                     status=row['status'],
                     premiered=row['premiered'],
+                    broadcast=row['broadcast'],
                     genres=row['genres'],
                     synopsis=row['synopsis'],
                     image_file=row['image_url']
