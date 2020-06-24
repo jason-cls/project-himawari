@@ -15,9 +15,9 @@
             <img class="img-responsive" src="{{ anime.image_file }}" style="padding-bottom: 15px" width="100%">
             <h6 style="padding-top: 10px">Alternative Titles</h6>
             <p style="text-align:left; font-size:12px">
-                <b>English:</b> TEMP PLACEHOLDER
+                <b>English:</b> {{ anime.title }}
                 <br>
-                <b>Japanese:</b> TEMP PLACEHOLDER
+                <b>Japanese:</b> {{ anime.title_japanese }}
             </p>
             <hr>
             <h6 style="padding-top: 10px">Information</h6>
@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td>Broadcast</td>
-                    <td class="align-right"><b>TEMP PLACEHOLDER</b></td>
+                    <td class="align-right"><b>{{ anime.broadcast }}</b></td>
                 </tr>
 
                 <tr>
@@ -135,9 +135,7 @@
 
 
             <h5 style="padding-top: 25px">Synopsis</h5>
-            <p>After a slow but eventful summer vacation, Shuchiin Academy's second term is now starting in full force. As August transitions into September, Miyuki Shirogane's birthday looms ever closer, leaving Kaguya Shinomiya in a serious predicament as to how to celebrate it. Furthermore, the tenure of the school's 67th student council is coming to an end. Due to the council members being in different classes, the only time Kaguya and Miyuki have to be together will soon disappear, putting all of their cunning plans at risk.
-
-A long and difficult election that will decide the fate of the new student council awaits, as multiple challengers fight for the coveted title of president.</p>
+            <p>{{ anime.synopsis }}</p>
             <hr>
 
             <h5 style="padding-top: 15px;">User Reviews</h5>
