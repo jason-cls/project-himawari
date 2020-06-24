@@ -25,8 +25,8 @@ class UserView(ModelView):
 class AnimeView(ModelView):
     column_searchable_list = ['title'] 
     column_filters = ('id', 'title', 'status')
-    column_list = ('id', 'title', 'episodes', 'rating', 
-        'status','premiered','image_file', 'datetime_created')
+    column_list = ('id', 'title','title_japanese', 'broadcast', 'episodes', 
+        'rating', 'status','premiered','image_file', 'datetime_created')
     page_size = 10
 
     def is_accessible(self):
