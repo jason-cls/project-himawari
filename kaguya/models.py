@@ -109,12 +109,14 @@ class User(UserMixin, db.Model):
         return f"User('username: {self.username}', 'email: {self.email}',\
         'datetime_created: {self.datetime_created}')"
 
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False
 
     def is_administrator(self):
         return False
+
 
 login_manager.anonymous_user = AnonymousUser
 
@@ -141,7 +143,7 @@ class Anime(db.Model):
         default=datetime.utcnow)
     title = db.Column(db.String(60), unique=False, nullable=False)
     type = db.Column(db.String(10), nullable=True, default='TV')
-    episodes = db.Column(db.Float, nullable=True, default=0.)
+    episodes = db.Column(db.Integer, nullable=True, default=0)
     rating = db.Column(db.String(50), nullable=True)
     score = db.Column(db.Float, nullable=True, default=0.)
     status = db.Column(db.String(20), default='Finished')

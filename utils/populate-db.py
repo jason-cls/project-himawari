@@ -59,7 +59,7 @@ class PopulateDB():
                 anime = Anime(
                     title=row['title'],
                     type=row['type'],
-                    episodes=float(row['episodes']),
+                    episodes=int(row['episodes']),
                     rating=row['rating'],
                     score=float(row['score']),
                     status=row['status'],

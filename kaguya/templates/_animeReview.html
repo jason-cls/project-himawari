@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--Anime page user reviews sub-template-->
+
+<div class="media mb-4">
+    <img class="d-flex mr-3 rounded-circle"
+         src="{{ url_for('static', filename='profile_pics/' + review.user.image_file) }}"
+         style="float:left; width:auto; height:8vh; margin-right:10px; border-radius:50%">
+    <div class="media-body">
+        <table style="width:100%; font-size:13px" class="mb-1">
+            <tr>
+                <td><h6>{{ review.user.username }}</h6></td>
+                <td class="align-right font-weight-heavy">
+                    {{ review.datetime_created.date() }} <br>
+                    Rating: <b>{{ review.rating }}</b>
+                </td>
+            </tr>
+        </table>
+
+        {{ review.content }}
+    </div>
+</div>
