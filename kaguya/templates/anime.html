@@ -32,7 +32,15 @@
                 </tr>
                 <tr>
                     <td>Episodes</td>
-                    <td class="align-right"><b>{{ anime.episodes }}</b></td>
+                    <td class="align-right">
+                        <b>
+                        {% if anime.episodes==0 %}
+                            N/A
+                        {% else %}
+                            {{ anime.episodes }}
+                        {% endif %}
+                        </b>
+                    </td>
                 </tr>
                 <tr>
                     <td>Status</td>
@@ -70,6 +78,7 @@
             {% endfor %}
             <hr>
 
+            {% if current_user.is_authenticated %}
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10 text-right">
@@ -109,6 +118,12 @@
             </div>
 
             <h6 style="padding-left:25px">Episode</h6>
+            {% if user_anime %}
+                {% set userEpisode=user_anime.episodes_watched %}
+            {% else %}
+                {% set userEpisode=0 %}
+            {% endif %}
+
             <div class="row">
                 <div class="col-md-2">
                     <div class="input-group input-group-sm">
@@ -117,7 +132,7 @@
                                   <i class="fa fa-minus" aria-hidden="true"></i>
                               </button>
                           </span>
-                          <input type="text" name="quant[1]" class="form-control input-number" value="9" min="0" max="10">
+                          <input type="text" name="quant[1]" class="form-control input-number" value="{{ userEpisode }}" min="0" max="{{ anime.episodes }}">
                           <span class="input-group-btn">
                               <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
                                   <i class="fa fa-plus" aria-hidden="true"></i>
@@ -128,18 +143,19 @@
                 <div class="col-md-10">
                     <h6 style="text-align:center">Completion Status</h6>
                     <div class="progress bg-secondary">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" >&nbsp; 9 / {{ anime.episodes }} episodes</div>
+                        {% set barWidth= userEpisode/anime.episodes*100 %}
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ barWidth }}%" >&nbsp; {{ userEpisode }} / {{ anime.episodes }} episodes</div>
                     </div>
                 </div>
             </div>
+            {% endif %}
 
 
             <h5 style="padding-top: 25px">Synopsis</h5>
             <p>{{ anime.synopsis }}</p>
             <hr>
 
-            <h5 style="padding-top: 15px;">User Reviews</h5>
-
+            {% if current_user.is_authenticated %}
             <!-- Comments Form -->
             <div class="card my-4">
                 <h6 class="card-header">Leave a Review</h6>
@@ -152,6 +168,10 @@
                     </form>
                 </div>
             </div>
+            <hr>
+            {% endif %}
+
+            <h5 style="padding-top: 15px;" class="pb-4">User Reviews</h5>
 
             <!-- User Reviews -->
             {% for review in reviews %}

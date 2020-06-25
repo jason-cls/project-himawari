@@ -55,12 +55,13 @@ class PopulateDB():
             df_anime = pd.read_csv(self.path)
             self.logger.info("Number of data entries found in %s: %s", 
                 self.path, len(df_anime))
+            df_anime['episodes'] = df_anime['episodes'].fillna(0).astype('int32')
             for index, row in df_anime.iterrows():
                 anime = Anime(
                     title=row['title'],
                     title_japanese=row['title_japanese'],
                     type=row['type'],
-                    episodes=int(row['episodes']),
+                    episodes=row['episodes'],
                     rating=row['rating'],
                     score=float(row['score']),
                     status=row['status'],
