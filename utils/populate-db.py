@@ -104,7 +104,7 @@ class PopulateDB():
                 for (userAnimeInfo, anime_id) in zip(userAnimes, anime_ids):
                     review = Review(
                         content=self.gen.paragraph(),
-                        rating=randint(0, 5),
+                        rating=randint(0, 10),
                         user_id=index+1,
                         anime_id=anime_id)
                     userAnime = UserAnime(

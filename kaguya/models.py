@@ -166,7 +166,7 @@ class Review(db.Model):
     datetime_created = db.Column(db.DateTime, nullable=False,
         default=datetime.utcnow)
     content = db.Column(db.Text, nullable=True)
-    rating = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     anime_id = db.Column(db.Integer, db.ForeignKey('anime.id'), nullable=False)
 
