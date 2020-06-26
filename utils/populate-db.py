@@ -110,7 +110,8 @@ class PopulateDB():
                     userAnime = UserAnime(
                         status=userAnimeInfo['status'],
                         episodes_watched=userAnimeInfo['episodes_watched'],
-                        user_id=index+1 ,
+                        favorite=userAnimeInfo['favorite'],
+                        user_id=index+1,
                         anime_id=anime_id,)
                     db.session.add(userAnime)
                     db.session.add(review)
@@ -156,7 +157,8 @@ class PopulateDB():
 
         template = {
             'status': ['Watch List', 'Watching', 'Finished'],
-            'episodes_watched': 'small_int'
+            'episodes_watched': 'small_int',
+            'favorite': [True, False]
         }
         self.useranime_gen.set_template(template)
 

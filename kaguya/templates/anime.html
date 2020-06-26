@@ -91,7 +91,7 @@
                                 <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle-status" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-flag" aria-hidden="true"></i> Displayed Status <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 </button>
-                                <div class="dropdown-menu " id="status" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu " id="status-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item status-btn" href="#"><i class="fa fa-eye" aria-hidden="true"></i> Watching</a>
                                     <a class="dropdown-item status-btn" href="#"><i class="fa fa-check" aria-hidden="true"></i> Completed</a>
                                     <a class="dropdown-item status-btn" href="#"><i class="fa fa-pause" aria-hidden="true"></i> On Hold</a>
@@ -124,7 +124,24 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-danger"><i class="fa fa-heart"> Favorite</i></button>
+                    <!-- Favorite button -->
+                    <div class="btn-group mt-3">
+                    {% if user_anime.favorite %}
+                        <form action="{{ url_for('anime_bp.unfavorite', anime_id=anime.id) }}" method="post">
+                            {{ emptyForm.hidden_tag() }}
+                            <button type="submit" class="btn btn-outline-danger active">
+                                <i class="fa fa-heart"> Favorited</i>
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('anime_bp.favorite', anime_id=anime.id) }}" method="post">
+                            {{ emptyForm.hidden_tag() }}
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="fa fa-heart"> Not Favorited</i>
+                            </button>
+                        </form>
+                    {% endif %}
+                    </div>
                 </div>
             </div>
 

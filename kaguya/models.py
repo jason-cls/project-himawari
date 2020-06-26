@@ -128,6 +128,7 @@ class UserAnime(db.Model):
         default=datetime.utcnow)
     status = db.Column(db.String(15), nullable=False, default='Untracked')
     episodes_watched = db.Column(db.Integer, nullable=False, default=0)
+    favorite = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     anime_id = db.Column(db.Integer, db.ForeignKey('anime.id'), nullable=False)
 
