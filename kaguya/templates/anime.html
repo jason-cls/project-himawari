@@ -89,7 +89,21 @@
                         <div class="input-group" id="statusInput">
                             <div class="input-group-btn" id="status">
                                 <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle-status" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-flag" aria-hidden="true"></i> Displayed Status <i class="fa fa-caret-down" aria-hidden="true"></i>
+<!--                                    <i class="fa fa-flag" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>-->
+                                    {% if user_anime.status == 'Watching' %}
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'Completed' %}
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'On Hold' %}
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'Dropped' %}
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'Plan to Watch' %}
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-flag" aria-hidden="true"></i> Set Status <i class="fa fa-caret-down" aria-hidden="true">
+                                    {% endif %}
+
                                 </button>
                                 <div class="dropdown-menu " id="status-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item status-btn" href="#"><i class="fa fa-eye" aria-hidden="true"></i> Watching</a>
@@ -109,6 +123,7 @@
                                     <i class="fa fa-star" aria-hidden="true"></i> Rating <i class="fa fa-caret-down" aria-hidden="true"></i>
                                 </button>
                                 <div class="dropdown-menu " id="rating" aria-labelledby="dropdownMenuButton2">
+
                                     <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 10</a>
                                     <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 9</a>
                                     <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 8</a>
@@ -137,7 +152,7 @@
                         <form action="{{ url_for('anime_bp.favorite', anime_id=anime.id) }}" method="post">
                             {{ emptyForm.hidden_tag() }}
                             <button type="submit" class="btn btn-outline-danger">
-                                <i class="fa fa-heart"> Not Favorited</i>
+                                <i class="fa fa-heart"> Favorite</i>
                             </button>
                         </form>
                     {% endif %}

@@ -61,3 +61,83 @@ def unfavorite(anime_id):
         return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
     else:
         return redirect(url_for('main.home'))
+
+
+@anime.route('/watching/<anime_id>', methods=['POST'])
+@login_required
+def watching(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        if user_anime is None:
+            flash('Unable to set status - anime was not found in the database.', 'warning')
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+        user_anime.status = 'Watching'
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+    else:
+        return redirect(url_for('main.home'))
+
+
+@anime.route('/completed/<anime_id>', methods=['POST'])
+@login_required
+def completed(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        if user_anime is None:
+            flash('Unable to set status - anime was not found in the database.', 'warning')
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+        user_anime.status = 'Completed'
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+    else:
+        return redirect(url_for('main.home'))
+
+
+@anime.route('/onhold/<anime_id>', methods=['POST'])
+@login_required
+def onhold(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        if user_anime is None:
+            flash('Unable to set status - anime was not found in the database.', 'warning')
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+        user_anime.status = 'On Hold'
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+    else:
+        return redirect(url_for('main.home'))
+
+
+@anime.route('/dropped/<anime_id>', methods=['POST'])
+@login_required
+def dropped(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        if user_anime is None:
+            flash('Unable to set status - anime was not found in the database.', 'warning')
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+        user_anime.status = 'Dropped'
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+    else:
+        return redirect(url_for('main.home'))
+
+
+@anime.route('/plantowatch/<anime_id>', methods=['POST'])
+@login_required
+def plantowatch(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        if user_anime is None:
+            flash('Unable to set status - anime was not found in the database.', 'warning')
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+        user_anime.status = 'Plan to Watch'
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+    else:
+        return redirect(url_for('main.home'))

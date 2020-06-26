@@ -156,7 +156,7 @@ class PopulateDB():
         self.useranime_gen = DocumentGenerator()
 
         template = {
-            'status': ['Watch List', 'Watching', 'Finished'],
+            'status': ['Untracked', 'Watching', 'Completed', 'On Hold', 'Dropped', 'Plan to Watch'],
             'episodes_watched': 'small_int',
             'favorite': [True, False]
         }
