@@ -88,29 +88,42 @@
                     <div class="btn-group dropdown" id="statusGroup">
                         <div class="input-group" id="statusInput">
                             <div class="input-group-btn" id="status">
-                                <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle-status" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-<!--                                    <i class="fa fa-flag" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>-->
+                                <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle-status active" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {% if user_anime.status == 'Watching' %}
                                         <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     {% elif user_anime.status == 'Completed' %}
-                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <i class="fa fa-check" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     {% elif user_anime.status == 'On Hold' %}
-                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <i class="fa fa-pause" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     {% elif user_anime.status == 'Dropped' %}
-                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <i class="fa fa-ban" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     {% elif user_anime.status == 'Plan to Watch' %}
-                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <i class="fa fa-bookmark" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     {% else %}
-                                        <i class="fa fa-flag" aria-hidden="true"></i> Set Status <i class="fa fa-caret-down" aria-hidden="true">
+                                        <i class="fa fa-flag" aria-hidden="true"></i> Set Status <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     {% endif %}
-
                                 </button>
-                                <div class="dropdown-menu " id="status-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item status-btn" href="#"><i class="fa fa-eye" aria-hidden="true"></i> Watching</a>
-                                    <a class="dropdown-item status-btn" href="#"><i class="fa fa-check" aria-hidden="true"></i> Completed</a>
-                                    <a class="dropdown-item status-btn" href="#"><i class="fa fa-pause" aria-hidden="true"></i> On Hold</a>
-                                    <a class="dropdown-item status-btn" href="#"><i class="fa fa-ban" aria-hidden="true"></i> Dropped</a>
-                                    <a class="dropdown-item status-btn" href="#"><i class="fa fa-bookmark" aria-hidden="true"></i> Plan to Watch</a>
+                                <div class="dropdown-menu" id="status-menu" aria-labelledby="dropdownMenuButton">
+                                  <form action="{{ url_for('anime_bp.watching', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Watching') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.completed', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Completed') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.onhold', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='On Hold') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.dropped', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Dropped') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.plantowatch', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Plan to Watch') }}
+                                  </form>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +153,7 @@
                         </div>
                     </div>
                     <!-- Favorite button -->
-                    <div class="btn-group mt-3">
+                    <div class="btn-group">
                     {% if user_anime.favorite %}
                         <form action="{{ url_for('anime_bp.unfavorite', anime_id=anime.id) }}" method="post">
                             {{ emptyForm.hidden_tag() }}
