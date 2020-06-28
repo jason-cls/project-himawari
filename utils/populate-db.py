@@ -102,14 +102,16 @@ class PopulateDB():
                 anime_ids = list(set(anime_ids))
                 userAnimes = self.useranime_gen.documents(len(anime_ids))
                 for (userAnimeInfo, anime_id) in zip(userAnimes, anime_ids):
+                    setRating = randint(0, 10)
                     review = Review(
                         content=self.gen.paragraph(),
-                        rating=randint(0, 10),
+                        rating=setRating,
                         user_id=index+1,
                         anime_id=anime_id)
                     userAnime = UserAnime(
                         status=userAnimeInfo['status'],
                         episodes_watched=userAnimeInfo['episodes_watched'],
+                        rating=setRating,
                         favorite=userAnimeInfo['favorite'],
                         user_id=index+1,
                         anime_id=anime_id,)
