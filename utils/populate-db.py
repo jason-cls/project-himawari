@@ -55,12 +55,13 @@ class PopulateDB():
             df_anime = pd.read_csv(self.path)
             self.logger.info("Number of data entries found in %s: %s", 
                 self.path, len(df_anime))
+            df_anime['episodes'] = df_anime['episodes'].fillna(0).astype('int32')
             for index, row in df_anime.iterrows():
                 anime = Anime(
                     title=row['title'],
                     title_japanese=row['title_japanese'],
                     type=row['type'],
-                    episodes=int(row['episodes']),
+                    episodes=row['episodes'],
                     rating=row['rating'],
                     score=float(row['score']),
                     status=row['status'],
@@ -101,15 +102,18 @@ class PopulateDB():
                 anime_ids = list(set(anime_ids))
                 userAnimes = self.useranime_gen.documents(len(anime_ids))
                 for (userAnimeInfo, anime_id) in zip(userAnimes, anime_ids):
+                    setRating = randint(0, 10)
                     review = Review(
                         content=self.gen.paragraph(),
-                        rating=randint(0, 5),
+                        rating=setRating,
                         user_id=index+1,
                         anime_id=anime_id)
                     userAnime = UserAnime(
                         status=userAnimeInfo['status'],
                         episodes_watched=userAnimeInfo['episodes_watched'],
-                        user_id=index+1 ,
+                        rating=setRating,
+                        favorite=userAnimeInfo['favorite'],
+                        user_id=index+1,
                         anime_id=anime_id,)
                     db.session.add(userAnime)
                     db.session.add(review)
@@ -154,8 +158,9 @@ class PopulateDB():
         self.useranime_gen = DocumentGenerator()
 
         template = {
-            'status': ['Watch List', 'Watching', 'Finished'],
-            'episodes_watched': 'small_int'
+            'status': ['Untracked', 'Watching', 'Completed', 'On Hold', 'Dropped', 'Plan to Watch'],
+            'episodes_watched': 'small_int',
+            'favorite': [True, False]
         }
         self.useranime_gen.set_template(template)
 

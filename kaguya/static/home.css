@@ -1,4 +1,4 @@
-.carousel-inner > .carousel-item > .col-xs-3 > img {
+.carousel-inner > .carousel-item > .col-xs-3 > a > img {
   height: 80%;
   width: 90%;
   padding: 0px;

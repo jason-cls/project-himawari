@@ -126,8 +126,10 @@ class UserAnime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     datetime_created = db.Column(db.DateTime, nullable=False,
         default=datetime.utcnow)
-    status = db.Column(db.String(15), nullable=False, default='Watch List')
+    status = db.Column(db.String(15), nullable=False, default='Untracked')
     episodes_watched = db.Column(db.Integer, nullable=False, default=0)
+    rating = db.Column(db.Integer, nullable=True)
+    favorite = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     anime_id = db.Column(db.Integer, db.ForeignKey('anime.id'), nullable=False)
 
@@ -166,7 +168,7 @@ class Review(db.Model):
     datetime_created = db.Column(db.DateTime, nullable=False,
         default=datetime.utcnow)
     content = db.Column(db.Text, nullable=True)
-    rating = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     anime_id = db.Column(db.Integer, db.ForeignKey('anime.id'), nullable=False)
 

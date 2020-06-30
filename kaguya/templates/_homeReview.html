@@ -8,14 +8,15 @@
       {{ review.user.username }}
       <br>
       <small>
-        reviewed <a href="#">{{ review.anime.title }}</a>
+        reviewed <a href="{{ url_for('anime_bp.anime_gen', anime_id=review.anime.id) }}">{{ review.anime.title }}</a>
       </small>
     </p>
   </h6>
   <div class="overflow">
     <p>
-<!--      <img src="https://cdn.myanimelist.net/images/anime/13/17405.jpg" style="float:left; width:auto; height:7vh; margin-right:15px;">-->
-      <img src="{{ review.anime.image_file }}" style="float:left; width:auto; height:7vh; margin-right:15px;">
+      <a href="{{ url_for('anime_bp.anime_gen', anime_id=review.anime.id) }}">
+        <img src="{{ review.anime.image_file }}" style="float:left; width:auto; height:7vh; margin-right:15px;">
+      </a>
       {{ review.content }}
     </p>
   </div>

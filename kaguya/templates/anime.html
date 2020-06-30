@@ -1,7 +1,9 @@
 <head>
     <!-- Anime Page CSS -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='anime.css') }}">
+
 </head>
+
 
 {% extends "base.html" %}
 
@@ -32,7 +34,15 @@
                 </tr>
                 <tr>
                     <td>Episodes</td>
-                    <td class="align-right"><b>{{ anime.episodes }}</b></td>
+                    <td class="align-right">
+                        <b>
+                        {% if anime.episodes==0 %}
+                            N/A
+                        {% else %}
+                            {{ anime.episodes }}
+                        {% endif %}
+                        </b>
+                    </td>
                 </tr>
                 <tr>
                     <td>Status</td>
@@ -70,93 +80,252 @@
             {% endfor %}
             <hr>
 
+            {% if current_user.is_authenticated %}
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10 text-right">
                     <!-- STATUS - Dropdown button -->
-                    <div class="btn-group dropdown">
-                        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Displayed Status
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Watching</a>
-                            <a class="dropdown-item active" href="#">Completed</a>
-                            <a class="dropdown-item" href="#">On Hold</a>
-                            <a class="dropdown-item" href="#">Dropped</a>
-                            <a class="dropdown-item" href="#">Plan to Watch</a>
+                    <div class="btn-group dropdown" id="statusGroup">
+                        <div class="input-group" id="statusInput">
+                            <div class="input-group-btn" id="status">
+                                <button type="button" class="btn btn-outline-info btn-sm dropdown-toggle-status active" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% if user_anime.status == 'Watching' %}
+                                        <i class="fa fa-eye" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'Completed' %}
+                                        <i class="fa fa-check" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'On Hold' %}
+                                        <i class="fa fa-pause" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'Dropped' %}
+                                        <i class="fa fa-ban" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.status == 'Plan to Watch' %}
+                                        <i class="fa fa-bookmark" aria-hidden="true"></i> {{ user_anime.status }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-flag" aria-hidden="true"></i> Set Status <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% endif %}
+                                </button>
+                                <div class="dropdown-menu" id="status-menu" aria-labelledby="dropdownMenuButton">
+                                  <form action="{{ url_for('anime_bp.watching', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Watching') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.completed', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Completed') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.onhold', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='On Hold') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.dropped', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Dropped') }}
+                                  </form>
+                                  <form action="{{ url_for('anime_bp.plantowatch', anime_id=anime.id) }}" method="post">
+                                    {{ emptyForm.hidden_tag() }}
+                                    {{ emptyForm.submit(type='submit', class='dropdown-item status-btn', value='Plan to Watch') }}
+                                  </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- USER RATING - Dropdown button -->
                     <div class="btn-group dropdown">
-                        <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ⭐ Rating
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">10</a>
-                            <a class="dropdown-item" href="#">9</a>
-                            <a class="dropdown-item active" href="#">8</a>
-                            <a class="dropdown-item" href="#">7</a>
-                            <a class="dropdown-item" href="#">6</a>
-                            <a class="dropdown-item" href="#">5</a>
-                            <a class="dropdown-item" href="#">4</a>
-                            <a class="dropdown-item" href="#">3</a>
-                            <a class="dropdown-item" href="#">2</a>
-                            <a class="dropdown-item" href="#">1</a>
+                        <div class="input-group">
+                            <div class="input-group-btn">
+
+                                <button type="button" class="btn btn-outline-warning btn-sm text-dark dropdown-toggle-rating active" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% if user_anime.rating == 0 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 1 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 2 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 3 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 4 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 5 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 6 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 7 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 8 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 9 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% elif user_anime.rating == 10 %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Rating: {{ user_anime.rating }} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="fa fa-star" aria-hidden="true"></i> Select Rating <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    {% endif %}
+                                </button>
+
+                                <div class="dropdown-menu " id="rating" aria-labelledby="dropdownMenuButton2">
+                                    <form action="{{ url_for('anime_bp.rate0', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=0) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate1', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=1) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate2', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=2) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate3', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=3) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate4', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=4) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate5', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=5) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate6', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=6) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate7', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=7) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate8', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=8) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate9', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=9) }}
+                                    </form>
+                                    <form action="{{ url_for('anime_bp.rate10', anime_id=anime.id) }}" method="post">
+                                        {{ emptyForm.hidden_tag() }}
+                                        {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=10) }}
+                                    </form>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-heart"> Favorite</i></button>
+                    <!-- Favorite button -->
+                    <div class="btn-group">
+                    {% if user_anime.favorite %}
+                        <form action="{{ url_for('anime_bp.unfavorite', anime_id=anime.id) }}" method="post">
+                            {{ emptyForm.hidden_tag() }}
+                            <button type="submit" class="btn btn-outline-danger active">
+                                <i class="fa fa-heart"> Favorited</i>
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('anime_bp.favorite', anime_id=anime.id) }}" method="post">
+                            {{ emptyForm.hidden_tag() }}
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="fa fa-heart"> Favorite</i>
+                            </button>
+                        </form>
+                    {% endif %}
+                    </div>
                 </div>
             </div>
 
             <h6 style="padding-left:25px">Episode</h6>
+            {% if user_anime %}
+                {% set userEpisode=user_anime.episodes_watched %}
+            {% else %}
+                {% set userEpisode=0 %}
+            {% endif %}
+
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="input-group input-group-sm">
+                        <!-- MINUS BUTTON -->
+                          {% if userEpisode==0 %}
                           <span class="input-group-btn">
-                              <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                              <button type="submit" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
                                   <i class="fa fa-minus" aria-hidden="true"></i>
                               </button>
                           </span>
-                          <input type="text" name="quant[1]" class="form-control input-number" value="9" min="0" max="10">
+                          {% else %}
+                          <form action="{{ url_for('anime_bp.minusEpisode', anime_id=anime.id) }}" method="post">
+                              {{ emptyForm.hidden_tag() }}
+                              <span class="input-group-btn">
+                                  <button type="submit" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+                                      <i class="fa fa-minus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+                          </form>
+                          {% endif %}
+
+                          <form action="" method="post">
+                              {{ episodeForm.hidden_tag() }}
+                              {{ episodeForm.csrf_token }}
+                              {{ episodeForm.eps_count(class="input form-control input-number", style="width: 60px", value=userEpisode) }}
+                          </form>
+
+                        <!-- PLUS BUTTON -->
+                          {% if userEpisode==anime.episodes %}
                           <span class="input-group-btn">
-                              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                              <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="plus" data-field="quant[1]">
                                   <i class="fa fa-plus" aria-hidden="true"></i>
                               </button>
                           </span>
+                          {% else %}
+                          <form action="{{ url_for('anime_bp.plusEpisode', anime_id=anime.id) }}" method="post">
+                              {{ emptyForm.hidden_tag() }}
+                              <span class="input-group-btn">
+                                  <button type="submit" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                      <i class="fa fa-plus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+                          </form>
+                          {% endif %}
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <h6 style="text-align:center">Completion Status</h6>
                     <div class="progress bg-secondary">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" >&nbsp; 9 / {{ anime.episodes }} episodes</div>
+                        {% set barWidth= userEpisode/anime.episodes*100 %}
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ barWidth }}%" >&nbsp; {{ userEpisode }} / {{ anime.episodes }} episodes</div>
                     </div>
                 </div>
             </div>
-
+            {% endif %}
 
             <h5 style="padding-top: 25px">Synopsis</h5>
             <p>{{ anime.synopsis }}</p>
             <hr>
 
-            <h5 style="padding-top: 15px;">User Reviews</h5>
-
+            {% if current_user.is_authenticated %}
+            {% if form %}
             <!-- Comments Form -->
             <div class="card my-4">
                 <h6 class="card-header">Leave a Review</h6>
                 <div class="card-body">
-                    <form>
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
                         <div class="form-group">
-                          <textarea class="form-control" rows="3"></textarea>
+                          {{ form.review(class="form-control", rows="3") }}
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        {{ form.submit(type="submit", class="btn btn-primary") }}
                     </form>
                 </div>
             </div>
+            <hr>
+            {% endif %}
+            {% endif %}
+
+            <h5 style="padding-top: 15px;" class="pb-4">User Reviews</h5>
 
             <!-- User Reviews -->
             {% for review in reviews %}
-                {% include '_animeReview.html' %}
-            <hr>
+                {% if review.content %}
+                    {% include '_animeReview.html' %}
+                    <hr>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

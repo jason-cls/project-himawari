@@ -18,15 +18,19 @@
         <div class="carousel-item active">
           {% for anime in animeGroup[:4] %}
             <div class="col-xs-3 col-sm-3 col-md-3">
+              <a href="{{ url_for('anime_bp.anime_gen', anime_id=anime.id) }}">
                 <img class="img-responsive" src="{{ anime.image_file }}" >
-                <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>{{ anime.title }}</b> </div>
+              </a>
+              <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>{{ anime.title }}</b> </div>
             </div>
           {% endfor %}
         </div>
         <div class="carousel-item">
           {% for anime in animeGroup[4:8] %}
             <div class="col-xs-3 col-sm-3 col-md-3">
-              <img class="img-responsive" src="{{ anime.image_file }}" >
+              <a href="{{ url_for('anime_bp.anime_gen', anime_id=anime.id) }}">
+                <img class="img-responsive" src="{{ anime.image_file }}" >
+              </a>
               <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>{{ anime.title }}</b> </div>
             </div>
           {% endfor %}
@@ -34,7 +38,9 @@
         <div class="carousel-item">
           {% for anime in animeGroup[8:] %}
             <div class="col-xs-3 col-sm-3 col-md-3">
-              <img class="img-responsive" src="{{ anime.image_file }}" >
+              <a href="{{ url_for('anime_bp.anime_gen', anime_id=anime.id) }}">
+                <img class="img-responsive" src="{{ anime.image_file }}" >
+              </a>
               <div style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis;"><b>{{ anime.title }}</b> </div>
             </div>
           {% endfor %}
