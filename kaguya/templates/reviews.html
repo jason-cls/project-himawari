@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>User Reviews</h1>
+
+  <!--Page Navigation-->
+  <row>
+    <table style="width:100%" class="mb-3">
+      <tr>
+        <td>
+          {% if prev_url %}
+            <a href="{{ prev_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+              </button>
+            </a>
+          {% endif %}
+        </td>
+        <td class="text-right align-right">
+          {% if next_url %}
+            <a href="{{ next_url }}">
+              <button type="button" class="btn btn-dark">
+                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </row>
+
+  {% for review in reviews %}
+    {% include '_animeReview.html' %}
+    <hr>
+  {% endfor %}
+
+  <!--Page Navigation-->
+  <row>
+    <table style="width:100%" class="mb-3">
+      <tr>
+        <td>
+          {% if prev_url %}
+            <a href="{{ prev_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+              </button>
+            </a>
+          {% endif %}
+        </td>
+        <td class="text-right align-right">
+          {% if next_url %}
+            <a href="{{ next_url }}">
+              <button type="button" class="btn btn-dark">
+                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </row>
+
+</div>
+
+{% endblock %}

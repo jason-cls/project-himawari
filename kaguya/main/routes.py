@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app
+from flask import Blueprint, render_template, current_app, request, url_for
 from flask_login import login_required
 from kaguya.decorators import admin_required, permission_required
 from kaguya.models import Anime, Review, UserAnime
@@ -34,3 +34,21 @@ def home():
 @admin_required  # Just example for how to use this admin decorator
 def about():
     return render_template('base.html', title="Home Page")
+
+
+@main.route('/reviews')
+def reviews():
+    n_reviews_per_page = current_app.config['NUM_REVIEWS_PER_PAGE']
+    page = request.args.get('page', 1, type=int)
+    q_reviews = Review.query.order_by(Review.datetime_created.desc())\
+        .paginate(page, n_reviews_per_page, True)
+    if q_reviews.has_prev:
+        prev_url = url_for('main.reviews', page=q_reviews.prev_num)
+    else:
+        prev_url = None
+    if q_reviews.has_next:
+        next_url = url_for('main.reviews', page=q_reviews.next_num)
+    else:
+        next_url = None
+    return render_template('reviews.html', title='User Reviews', reviews=q_reviews.items,
+                           prev_url=prev_url, next_url=next_url)
