@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import current_user, login_required
 from kaguya.models import Anime, Review, UserAnime
-from kaguya.anime.forms import ReviewForm, EmptyForm
+from kaguya.anime.forms import ReviewForm, EmptyForm, EpisodeForm
 from kaguya import db
+from wtforms.validators import NumberRange
 
 
 anime = Blueprint('anime_bp', __name__)
@@ -15,20 +16,41 @@ def anime_gen(anime_id):
     if current_user.is_anonymous:
         flash('Sign in to track anime and leave reviews.', 'info')
         return render_template('anime.html', anime=q_anime, reviews=reviews)
+
     else:
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
         form = ReviewForm()
         emptyForm = EmptyForm()
+        episodeForm = EpisodeForm()
+        episodeForm.eps_count.validators = [NumberRange(min=0, max=q_anime.episodes)]
+
         if form.validate_on_submit():
-            user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
             review = Review(content=form.review.data, user=current_user, anime_id=anime_id, rating=user_anime.rating)
             db.session.add(review)
             db.session.commit()
             flash('Your review has been posted!', 'info')
             return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
-        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+
+        if episodeForm.validate_on_submit():
+            if user_anime is None:
+                user_anime = UserAnime(
+                    status='Untracked',
+                    episodes_watched=episodeForm.eps_count.data,
+                    rating=None,
+                    favorite=False,
+                    user_id=current_user.id,
+                    anime_id=anime_id)
+                db.session.add(user_anime)
+            else:
+                user_anime.episodes_watched = episodeForm.eps_count.data
+            db.session.commit()
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+        elif len(episodeForm.eps_count.errors) != 0:
+            flash('Invalid episode input.', 'warning')
+            return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
 
         return render_template('anime.html', anime=q_anime, reviews=reviews, user_anime=user_anime,
-                               form=form, emptyForm=emptyForm)
+                               form=form, emptyForm=emptyForm, episodeForm=episodeForm)
 
 
 @anime.route('/favorite/<anime_id>', methods=['POST'])
@@ -445,3 +467,35 @@ def rate10(anime_id):
         return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
     else:
         return redirect(url_for('main.home'))
+
+
+@anime.route('/plusEpisode/<anime_id>', methods=['POST'])
+@login_required
+def plusEpisode(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        if user_anime is None:
+            user_anime = UserAnime(
+                status='Untracked',
+                episodes_watched=1,
+                rating=None,
+                favorite=False,
+                user_id=current_user.id,
+                anime_id=anime_id)
+            db.session.add(user_anime)
+        else:
+            user_anime.episodes_watched = user_anime.episodes_watched + 1
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))
+
+
+@anime.route('/minusEpisode/<anime_id>', methods=['POST'])
+@login_required
+def minusEpisode(anime_id):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user_anime = UserAnime.query.filter_by(anime_id=anime_id, user_id=current_user.id).first()
+        user_anime.episodes_watched = user_anime.episodes_watched - 1
+        db.session.commit()
+        return redirect(url_for('anime_bp.anime_gen', anime_id=anime_id))

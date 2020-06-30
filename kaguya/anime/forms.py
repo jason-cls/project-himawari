@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import TextAreaField, SubmitField, IntegerField
+from wtforms.widgets.html5 import NumberInput
+from wtforms.validators import DataRequired, NumberRange
 
 
 class ReviewForm(FlaskForm):
@@ -11,3 +12,7 @@ class ReviewForm(FlaskForm):
 # Empty form for button actions
 class EmptyForm(FlaskForm):
     submit = SubmitField('')
+
+
+class EpisodeForm(FlaskForm):
+    eps_count = IntegerField()

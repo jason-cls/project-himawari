@@ -207,17 +207,6 @@
                                         {{ emptyForm.submit(type='submit', class='dropdown-item rate-btn', value=10) }}
                                     </form>
 
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 10</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 9</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 8</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 7</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 6</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 5</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 4</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 3</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 2</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 1</a>-->
-<!--                                    <a class="dropdown-item rate-btn" href="#"><i class="fa fa-star" aria-hidden="true"></i> 0</a>-->
                                 </div>
                             </div>
                         </div>
@@ -251,22 +240,52 @@
             {% endif %}
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="input-group input-group-sm">
+                        <!-- MINUS BUTTON -->
+                          {% if userEpisode==0 %}
                           <span class="input-group-btn">
-                              <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                              <button type="submit" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
                                   <i class="fa fa-minus" aria-hidden="true"></i>
                               </button>
                           </span>
-                          <input type="text" name="quant[1]" class="form-control input-number" value="{{ userEpisode }}" min="0" max="{{ anime.episodes }}">
+                          {% else %}
+                          <form action="{{ url_for('anime_bp.minusEpisode', anime_id=anime.id) }}" method="post">
+                              {{ emptyForm.hidden_tag() }}
+                              <span class="input-group-btn">
+                                  <button type="submit" class="btn btn-default btn-number" data-type="minus" data-field="quant[1]">
+                                      <i class="fa fa-minus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+                          </form>
+                          {% endif %}
+
+                          <form action="" method="post">
+                              {{ episodeForm.hidden_tag() }}
+                              {{ episodeForm.csrf_token }}
+                              {{ episodeForm.eps_count(class="input form-control input-number", style="width: 60px", value=userEpisode) }}
+                          </form>
+
+                        <!-- PLUS BUTTON -->
+                          {% if userEpisode==anime.episodes %}
                           <span class="input-group-btn">
-                              <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                              <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="plus" data-field="quant[1]">
                                   <i class="fa fa-plus" aria-hidden="true"></i>
                               </button>
                           </span>
+                          {% else %}
+                          <form action="{{ url_for('anime_bp.plusEpisode', anime_id=anime.id) }}" method="post">
+                              {{ emptyForm.hidden_tag() }}
+                              <span class="input-group-btn">
+                                  <button type="submit" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                      <i class="fa fa-plus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+                          </form>
+                          {% endif %}
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <h6 style="text-align:center">Completion Status</h6>
                     <div class="progress bg-secondary">
                         {% set barWidth= userEpisode/anime.episodes*100 %}
