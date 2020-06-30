@@ -141,6 +141,10 @@ img.logo{
     opacity: 0.4
 }
 
+.table-row{
+cursor:pointer;
+}
+
 //Footer 
 #sticky-footer {
   flex-shrink: none;

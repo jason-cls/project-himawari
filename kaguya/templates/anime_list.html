@@ -32,8 +32,8 @@
                     </thead>
                     <tbody>
                         {% for anime in animelist %}
-                            <tr>
-                                <th scope="row"><a href="{{ url_for('anime_bp.anime_gen', anime_id=anime[0].id) }}">{{loop.index}}</a></th>
+                            <tr data-href="{{ url_for('anime_bp.anime_gen', anime_id=anime[0].id) }}">
+                                <th scope="row">{{ loop.index }}</th>
                                 <td>{{ anime[0].title }}</td>
                                 <td>{{ anime[1].rating }}</td>
                                 <td>{{ anime[1].episodes_watched }}/{{ anime[0].episodes }}</td>
