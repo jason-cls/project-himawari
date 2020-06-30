@@ -56,6 +56,11 @@
             </li>
             {% else %}
             <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('users.anime_list', user_id=current_user.id, user_url=current_user.username.replace(' ', '_')) }}">
+                  <i class="fa fa-list" aria-hidden="true"></i> Anime List
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ url_for('users.account') }}">
                   <i class="fa fa-user" aria-hidden="true"></i> My Account
               </a>

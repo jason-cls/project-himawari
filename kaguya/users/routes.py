@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash
 from kaguya import db
-from kaguya.models import User
+from kaguya.models import User, UserAnime, Anime, Permission
+from kaguya.decorators import permission_required
 from kaguya.users.forms import LoginForm, RegisterForm, UpdateAccountForm
 from kaguya.users.utils import save_picture
 from flask_login import current_user, login_user, logout_user, login_required
@@ -86,3 +87,19 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', form=form,
         title=current_user.username, image_file=image_file)
+
+@users.route('/user/<int:user_id>/anime_list')
+@users.route('/user/<int:user_id>/<string:user_url>/anime_list')
+@permission_required(Permission.REVIEW)
+def anime_list(user_id, user_url=None):
+    # Only admin, mod, or list owner should be able to see the list
+    if user_id == current_user.id or (current_user.can(Permission.MODERATE)): 
+        animelist = db.session\
+        .query(Anime, UserAnime)\
+        .outerjoin(Anime, UserAnime.anime_id==Anime.id)\
+        .filter(UserAnime.user_id==user_id)\
+        .order_by(UserAnime.status)
+    else:
+        return redirect(url_for('users.anime_list', user_id=current_user.id))
+
+    return render_template('anime_list.html', title="My Anime List", animelist=animelist)
