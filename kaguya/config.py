@@ -13,4 +13,4 @@ class Config(object):
     NUM_CAROUSEL_ANIME = 12   # Number of anime to display per carousel (4 items per slide, 3 slides)
     CURRENT_SEASON = "Fall 2004"
     UPCOMING_SEASON = "Spring 2005"
-    NUM_REVIEWS_PER_PAGE = 10
+    NUM_REVIEWS_PER_PAGE = 6

@@ -4,6 +4,7 @@ from kaguya.decorators import admin_required, permission_required
 from kaguya.models import Anime, Review, UserAnime
 from kaguya import db
 from sqlalchemy import func, desc
+from werkzeug.exceptions import BadRequestKeyError, HTTPException
 
 
 main = Blueprint('main', __name__)
@@ -36,12 +37,30 @@ def about():
     return render_template('base.html', title="Home Page")
 
 
-@main.route('/reviews')
+@main.route('/reviews', methods=['GET', 'POST'])
 def reviews():
     n_reviews_per_page = current_app.config['NUM_REVIEWS_PER_PAGE']
     page = request.args.get('page', 1, type=int)
-    q_reviews = Review.query.order_by(Review.datetime_created.desc())\
-        .paginate(page, n_reviews_per_page, True)
+    q_reviews = Review.query.order_by(Review.datetime_created.desc())
+
+    # Filter queries
+    if len(request.form) != 0:
+        q_reviews = Review.query
+        ratingFilter = request.form.get('ratingRadios')
+
+        if ratingFilter == 'lowest rating':
+            q_reviews = q_reviews.order_by(Review.rating)
+        elif ratingFilter == 'highest rating':
+            q_reviews = q_reviews.order_by(Review.rating.desc())
+
+        timeFilter = request.form.get('timeRadios')
+        if timeFilter == 'oldest':
+            q_reviews = q_reviews.order_by(Review.datetime_created)
+        elif timeFilter == 'recent':
+            q_reviews = q_reviews.order_by(Review.datetime_created.desc())
+
+    # Pagination
+    q_reviews = q_reviews.paginate(page, n_reviews_per_page, True)
     if q_reviews.has_prev:
         prev_url = url_for('main.reviews', page=q_reviews.prev_num)
     else:
