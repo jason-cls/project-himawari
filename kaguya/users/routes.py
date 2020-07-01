@@ -93,13 +93,20 @@ def account():
 @permission_required(Permission.REVIEW)
 def anime_list(user_id, user_url=None):
     # Only admin, mod, or list owner should be able to see the list
+    statuses = ["Watching", "Untacked", "On Hold", "Plan to Watch",
+        "Completed", "Dropped"]
+    anime_list = {}
+
     if user_id == current_user.id or (current_user.can(Permission.MODERATE)): 
-        animelist = db.session\
-        .query(Anime, UserAnime)\
-        .outerjoin(Anime, UserAnime.anime_id==Anime.id)\
-        .filter(UserAnime.user_id==user_id)\
-        .order_by(UserAnime.status)
+        for status in statuses:
+            animelist = db.session\
+            .query(Anime, UserAnime)\
+            .outerjoin(Anime, UserAnime.anime_id==Anime.id)\
+            .filter(UserAnime.user_id==user_id)\
+            .filter(UserAnime.status==status)
+            anime_list[status] = animelist
+
     else:
         return redirect(url_for('users.anime_list', user_id=current_user.id))
 
-    return render_template('anime_list.html', title="My Anime List", animelist=animelist)
+    return render_template('anime_list.html', title="My Anime List", animelist=anime_list)
