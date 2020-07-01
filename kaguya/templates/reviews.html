@@ -2,34 +2,77 @@
 
 {% block content %}
 <div class="container">
-  <h1>User Reviews</h1>
 
-  <!--Page Navigation-->
-  <row>
-    <table style="width:100%" class="mb-3">
-      <tr>
-        <td>
-          {% if prev_url %}
-            <a href="{{ prev_url }}">
-              <button type="button" class="btn btn-dark">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
-              </button>
-            </a>
-          {% endif %}
-        </td>
-        <td class="text-right align-right">
-          {% if next_url %}
-            <a href="{{ next_url }}">
-              <button type="button" class="btn btn-dark">
-                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
-              </button>
-            </a>
-          {% endif %}
-        </td>
-      </tr>
-    </table>
-  </row>
+<!--  &lt;!&ndash;Page Navigation&ndash;&gt;-->
+<!--  <row>-->
+<!--    <table style="width:100%" class="mb-3">-->
+<!--      <tr>-->
+<!--        <td>-->
+<!--          {% if prev_url %}-->
+<!--            <a href="{{ prev_url }}">-->
+<!--              <button type="button" class="btn btn-dark">-->
+<!--                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back-->
+<!--              </button>-->
+<!--            </a>-->
+<!--          {% endif %}-->
+<!--        </td>-->
+<!--        <td class="text-right align-right">-->
+<!--          {% if next_url %}-->
+<!--            <a href="{{ next_url }}">-->
+<!--              <button type="button" class="btn btn-dark">-->
+<!--                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>-->
+<!--              </button>-->
+<!--            </a>-->
+<!--          {% endif %}-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--    </table>-->
+<!--  </row>-->
 
+  <!--Filters / Sorting-->
+  <table style="width:100%" class="mb-5">
+    <tr>
+      <td>
+        <h1>User Reviews</h1>
+      </td>
+      <td>
+        <div class="dropdown float-right">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter By
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <div class="dropdown-item form-check pl-5">
+              <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="option1" checked>
+              <label class="form-check-label" for="timeRadios1">
+                Recent
+              </label>
+            </div>
+            <div class="dropdown-item form-check pl-5">
+              <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="option2">
+              <label class="form-check-label" for="timeRadios2">
+                Oldest
+              </label>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item form-check pl-5">
+              <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="option1" checked>
+              <label class="form-check-label" for="ratingRadios1">
+                Highest Rating
+              </label>
+            </div>
+            <div class="dropdown-item form-check pl-5">
+              <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="option2">
+              <label class="form-check-label" for="ratingRadios2">
+                Lowest Rating
+              </label>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  
   {% for review in reviews %}
     {% include '_review.html' %}
     <hr>
