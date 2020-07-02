@@ -71,3 +71,9 @@ def reviews():
         next_url = None
     return render_template('reviews.html', title='User Reviews', reviews=q_reviews.items,
                            prev_url=prev_url, next_url=next_url)
+
+
+@main.route('/explore')
+@admin_required  # Just example for how to use this admin decorator
+def explore():
+    return render_template('explore.html', title="Browse Anime")

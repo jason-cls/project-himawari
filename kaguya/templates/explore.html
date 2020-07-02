@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='explore.css') }}">
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <!--Search Bar-->
+  <div class="row">
+    <div class="col-md-8 col-centered">
+      <div class="input-group mb-5 mt-4">
+        <input id="searchbar" type="text" placeholder="Search Anime" class="form-control border-primary">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Filter Options-->
+  <div class="row">
+  </div>
+
+  <!--Anime Grid: X by 4 grid-->
+  <div class="row text-center">
+    {% include '_animeRow4.html' %}
+    {% include '_animeRow4.html' %}
+  </div>
+
+  <!--Page Navigation-->
+
+
+</div>
+
+{% endblock %}
