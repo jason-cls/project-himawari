@@ -99,7 +99,7 @@ def anime_list(user_id, select_list="All", user_url=None):
     anime_list={}
 
     if select_list == "All":
-        statuses = ["Watching", "Untacked", "On Hold", "Plan to Watch",
+        statuses = ["Watching", "Untracked", "On Hold", "Plan to Watch",
             "Completed", "Dropped"]
     else:
         statuses = [str(select_list).replace("_"," ")]
