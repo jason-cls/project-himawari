@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+  <!--Filters / Sorting-->
+  <table style="width:100%" class="mb-5">
+    <tr>
+      <td>
+        <h1>User Reviews</h1>
+      </td>
+      <td>
+        <div class="dropdown float-right">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter By
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <form action="{{ url_for('main.reviews') }}" method="post" onsubmit="">
+              <div class="dropdown-item form-check pl-5">
+                {% if request.form.get('ratingRadios') == 'highest rating' %}
+                <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating" checked>
+                {% else %}
+                <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating">
+                {% endif %}
+                <label class="form-check-label" for="ratingRadios1">
+                  Highest Rating
+                </label>
+              </div>
+              <div class="dropdown-item form-check pl-5">
+                {% if request.form.get('ratingRadios') == 'lowest rating' %}
+                <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="lowest rating" checked>
+                {% else %}
+                <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="lowest rating">
+                {% endif %}
+                <label class="form-check-label" for="ratingRadios2">
+                  Lowest Rating
+                </label>
+              </div>
+              <div class="dropdown-item form-check pl-5">
+                {% if request.form.get('ratingRadios') == 'any rating' or request.form.get('ratingRadios') == None %}
+                <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios3" value="any rating" checked>
+                {% else %}
+                <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios3" value="any rating">
+                {% endif %}
+                <label class="form-check-label" for="ratingRadios3">
+                  Any Rating
+                </label>
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item form-check pl-5">
+                {% if request.form.get('timeRadios') == 'recent' or request.form.get('timeRadios') == None %}
+                <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent" checked>
+                {% else %}
+                <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent">
+                {% endif %}
+                <label class="form-check-label" for="timeRadios1">
+                  Recent
+                </label>
+              </div>
+              <div class="dropdown-item form-check pl-5">
+                {% if request.form.get('timeRadios') == 'oldest' %}
+                <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="oldest" checked>
+                {% else %}
+                <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="oldest">
+                {% endif %}
+                <label class="form-check-label" for="timeRadios2">
+                  Oldest
+                </label>
+              </div>
+
+              <div class="dropdown-item">
+                <input type="submit" value="Apply">
+              </div>
+            </form>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+
+  {% for review in reviews %}
+    {% include '_review.html' %}
+    <hr>
+  {% endfor %}
+
+  <!--Page Navigation-->
+  <row>
+    <table style="width:100%" class="mb-3">
+      <tr>
+        <td>
+          {% if prev_url %}
+            <a href="{{ prev_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+              </button>
+            </a>
+          {% endif %}
+        </td>
+        <td class="text-right align-right">
+          {% if next_url %}
+            <a href="{{ next_url }}">
+              <button type="button" class="btn btn-dark">
+                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </button>
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </row>
+
+</div>
+
+{% endblock %}
