@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, redirect, request, url_for, flash
 from kaguya import db
 from kaguya.models import User, UserAnime, Anime, Permission
 from kaguya.decorators import permission_required
-from kaguya.users.forms import LoginForm, RegisterForm, UpdateAccountForm
+from kaguya.users.forms import (LoginForm, RegisterForm, UpdateAccountForm, 
+    AnimeListFilterForm)
 from kaguya.users.utils import save_picture
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -88,16 +89,23 @@ def account():
     return render_template('account.html', form=form,
         title=current_user.username, image_file=image_file)
 
-@users.route('/user/<int:user_id>/anime_list')
-@users.route('/user/<int:user_id>/<string:user_url>/anime_list')
+@users.route('/user/<int:user_id>/anime_list/<string:select_list>', methods=["GET", "POST"])
+@users.route('/user/<int:user_id>/<string:user_url>/anime_list/<string:select_list>', methods=['GET', 'POST'])
 @permission_required(Permission.REVIEW)
-def anime_list(user_id, user_url=None):
-    # Only admin, mod, or list owner should be able to see the list
-    statuses = ["Watching", "Untacked", "On Hold", "Plan to Watch",
-        "Completed", "Dropped"]
-    anime_list = {}
+def anime_list(user_id, select_list="All", user_url=None):
 
-    if user_id == current_user.id or (current_user.can(Permission.MODERATE)): 
+    form = AnimeListFilterForm()
+    # Only admin, mod, or list owner should be able to see the list
+    anime_list={}
+
+    if select_list == "All":
+        statuses = ["Watching", "Untacked", "On Hold", "Plan to Watch",
+            "Completed", "Dropped"]
+    else:
+        statuses = [str(select_list).replace("_"," ")]
+
+    if user_id == current_user.id or (current_user.can(Permission.MODERATE)):
+        anime_list = {} 
         for status in statuses:
             animelist = db.session\
             .query(Anime, UserAnime)\
@@ -105,8 +113,16 @@ def anime_list(user_id, user_url=None):
             .filter(UserAnime.user_id==user_id)\
             .filter(UserAnime.status==status)
             anime_list[status] = animelist
-
     else:
-        return redirect(url_for('users.anime_list', user_id=current_user.id))
+        return redirect(url_for('users.anime_list', user_id=current_user.id, select_list='All'))
+    
+    if request.method=="POST":
+        select_list = form.select_list.data.replace(" ","_")
 
-    return render_template('anime_list.html', title="My Anime List", animelist=anime_list)
+        return redirect(url_for('users.anime_list', user_id=current_user.id,
+            select_list=select_list, user_url=current_user.username))
+    
+    elif request.method=="GET":
+        form.select_list.data = select_list.replace(" ","_")
+
+    return render_template('anime_list.html', title="My Anime List", animelist=anime_list, form=form)

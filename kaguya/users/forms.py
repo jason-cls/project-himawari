@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from flask_login import current_user
 from kaguya.models import User
@@ -49,9 +49,14 @@ class UpdateAccountForm(FlaskForm):
 
     def validate_new_password(self, new_password):
         if current_user.check_password(new_password.data):
-            print('hi world')
             raise ValidationError('New password is the same as the existing one.\
              Please choose a different one.')
 
 
+class AnimeListFilterForm(FlaskForm):
+    select_list = SelectField("Select List", choices=[("All", "All"),("Watching", "Watching"), 
+        ("Untacked","Untacked"), ("On Hold","On Hold"), 
+        ("Plan to Watch", "Plan to Watch"),
+        ("Completed","Completed"), ("Dropped", "Dropped")], validators=[DataRequired()])
+    submit = SubmitField("Select")
 

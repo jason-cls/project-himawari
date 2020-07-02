@@ -4,24 +4,16 @@
 
 <div class="container">
     <div class="row">
-            <h1 class="font-weight-light text-center" >Welcome {{ current_user.username }}!</h1>
+            <h1 class="font-weight-light text-center">Welcome {{ current_user.username }}!</h1>
     </div>
 
     <div class="row mb-4">
         <div class="col-md-3">
-            <form>
-                <div class="form-group mt-4">
-                    <label for="listSelect">Choose a List</label>
-                    <select class="custom-select mr-sm-2" id="listSelect">
-                        <option selected="All">All</option>
-                        <option value="Watching">Watching</option>
-                        <option value="Untacked">Untacked</option>
-                        <option value="On Hold">On Hold</option>
-                        <option value="Plan to Watch">Plan to Watch</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Droppedd">Dropped</option>
-                    </select>
-                </div>
+            <form method="POST" novalidate>
+                <div class="form-group">
+                    {{ form.select_list.label }} {{ form.select_list(class="custom-select mr-sm-2", id="listSelect") }}
+                    {{ form.submit(class="btn btn-sm btn-primary mx-auto mt-2", type="submit") }}
+                </div> 
             </form>
         </div>
         <div class="col-md-9">
