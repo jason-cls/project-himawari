@@ -55,7 +55,7 @@ class UpdateAccountForm(FlaskForm):
 
 class AnimeListFilterForm(FlaskForm):
     select_list = SelectField("Select List", choices=[("All", "All"),("Watching", "Watching"), 
-        ("Untacked","Untacked"), ("On Hold","On Hold"), 
+        ("Untracked","Untracked"), ("On Hold","On Hold"), 
         ("Plan to Watch", "Plan to Watch"),
         ("Completed","Completed"), ("Dropped", "Dropped")], validators=[DataRequired()])
     submit = SubmitField("Select")
