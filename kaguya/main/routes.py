@@ -76,4 +76,19 @@ def reviews():
 @main.route('/explore')
 @admin_required  # Just example for how to use this admin decorator
 def explore():
-    return render_template('explore.html', title="Browse Anime")
+    n_anime_per_page = 12
+    page = request.args.get('page', 1, type=int)
+    q_anime = Anime.query.order_by(Anime.id)
+
+    # Pagination
+    q_anime = q_anime.paginate(page, n_anime_per_page, True)
+    if q_anime.has_prev:
+        prev_url = url_for('main.explore', page=q_anime.prev_num)
+    else:
+        prev_url = None
+    if q_anime.has_next:
+        next_url = url_for('main.explore', page=q_anime.next_num)
+    else:
+        next_url = None
+    return render_template('explore.html', title="Browse Anime", animes=q_anime.items,
+                           prev_url=prev_url, next_url=next_url)

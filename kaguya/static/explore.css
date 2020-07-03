@@ -4,10 +4,10 @@
   margin-left: auto;
 }
 
-.figure > .img-thumbnail {
+.figure > a > .img-thumbnail {
   width: 100%;
   height: auto;
-  max-height: 320px;
+  max-height: 300px;
   border-radius: 5%;
   padding: 0px;
 }
@@ -19,6 +19,16 @@
 .figure-caption{
   margin-bottom: 5vh;
 }
+
+.dropdown-menu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+ .figure-caption > a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+ }
 
 #myInput #yearInput {
     padding: 20px;

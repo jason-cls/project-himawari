@@ -3,28 +3,11 @@
 
 <div class="col-md-3">
   <figure class="figure">
-    <img class="figure-img img-responsive img-thumbnail" src="https://cdn.myanimelist.net/images/anime/13/7226.jpg">
+    <a href="{{ url_for('anime_bp.anime_gen', anime_id=anime.id) }}">
+      <img class="figure-img img-responsive img-thumbnail" src="{{ anime.image_file }}">
+    </a>
   </figure>
-  <figcaption class="figure-caption text-left text-truncate font-weight-bold">A caption for the above image asd asd  d d</figcaption>
-</div>
-
-<div class="col-md-3">
-  <figure class="figure">
-    <img class="figure-img img-responsive img-thumbnail" src="https://cdn.myanimelist.net/images/anime/6/75536.jpg">
-  </figure>
-  <figcaption class="figure-caption text-left text-truncate font-weight-bold">A caption for the above image asd asd  d d</figcaption>
-</div>
-
-<div class="col-md-3">
-  <figure class="figure">
-    <img class="figure-img img-responsive img-thumbnail" src="https://cdn.myanimelist.net/images/anime/8/6591.jpg">
-  </figure>
-  <figcaption class="figure-caption text-left text-truncate font-weight-bold">A caption for the above image asd asd  d d</figcaption>
-</div>
-
-<div class="col-md-3">
-  <figure class="figure">
-    <img class="figure-img img-responsive img-thumbnail" src="https://cdn.myanimelist.net/images/anime/7/75919.jpg">
-  </figure>
-  <figcaption class="figure-caption text-left text-truncate font-weight-bold">A caption for the above image asd asd  d d</figcaption>
+  <figcaption class="figure-caption text-center text-truncate font-weight-bold">
+    <a href="{{ url_for('anime_bp.anime_gen', anime_id=anime.id) }}" style="text-decoration:none">{{ anime.title }}</a>
+  </figcaption>
 </div>
