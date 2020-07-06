@@ -21,21 +21,38 @@
 
   <!--Filter Options-->
   <div class="row">
-    <div class="col-md-12 mb-5 d-flex justify-content-around">
+    <form action="{{ url_for('main.explore') }}" method="post" onsubmit="">
+    <div class="col-md-12 mb-5 ">
       <!--Genres-->
       <div class="btn-group dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
           Genres <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <input class="form-control" id="myInput" type="text" placeholder="Search...">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item"  href="#">Drama</a>
-          <a class="dropdown-item"  href="#">Shounen</a>
-          <a class="dropdown-item"  href="#">Supernatural</a>
-          <a class="dropdown-item"  href="#">Comedy</a>
-          <a class="dropdown-item"  href="#">Magic</a>
-          <a class="dropdown-item"  href="#">Magic</a>
+            <div class="dropdown-item">
+              <input type="submit" value="Apply">
+            </div>
+            <input class="form-control" id="myInput" type="text" placeholder="Search...">
+            {% for name,tagList in tags %}
+              {% if name=='genres' %}
+                {% for tag in tagList %}
+                  <div class="dropdown-item form-check pl-5">
+                    {% if request.form.getlist('genreCheckboxes') != None %}
+                      {% if tag in request.form.getlist('genreCheckboxes') %}
+                        <input class="form-check-input" type="checkbox" name="genreCheckboxes" value="{{ tag }}" id="genreCheck" checked>
+                      {% else %}
+                        <input class="form-check-input" type="checkbox" name="genreCheckboxes" value="{{ tag }}" id="genreCheck">
+                      {% endif %}
+                    {% else %}
+                      <input class="form-check-input" type="checkbox" name="genreCheckboxes" value="{{ tag }}" id="genreCheck">
+                    {% endif %}
+                    <label class="form-check-label" for="genreCheck">
+                      {{ tag }}
+                    </label>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
         </ul>
       </div>
 
@@ -45,13 +62,30 @@
           Year <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <input class="form-control" id="yearInput" type="text" placeholder="Search...">
-          <a class="dropdown-item" href="#">a</a>
-          <a class="dropdown-item"  href="#">b</a>
-          <a class="dropdown-item"  href="#">c</a>
-          <a class="dropdown-item"  href="#">d</a>
-          <a class="dropdown-item"  href="#">e</a>
-          <a class="dropdown-item"  href="#">f</a>
+            <div class="dropdown-item">
+              <input type="submit" value="Apply">
+            </div>
+            <input class="form-control" id="yearInput" type="text" placeholder="Search...">
+            {% for name,tagList in tags %}
+              {% if name=='year' %}
+                {% for tag in tagList %}
+                  <div class="dropdown-item form-check pl-5">
+                    {% if request.form.getlist('yearCheckboxes') != None %}
+                      {% if tag in request.form.getlist('yearCheckboxes') %}
+                        <input class="form-check-input" type="checkbox" name="yearCheckboxes" value="{{ tag }}" id="yearCheck" checked>
+                      {% else %}
+                        <input class="form-check-input" type="checkbox" name="yearCheckboxes" value="{{ tag }}" id="yearCheck">
+                      {% endif %}
+                    {% else %}
+                      <input class="form-check-input" type="checkbox" name="yearCheckboxes" value="{{ tag }}" id="yearCheck">
+                    {% endif %}
+                    <label class="form-check-label" for="yearCheck">
+                      {{ tag }}
+                    </label>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
         </ul>
       </div>
 
@@ -61,10 +95,29 @@
           Season <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <a class="dropdown-item" href="#">Winter</a>
-          <a class="dropdown-item"  href="#">Spring</a>
-          <a class="dropdown-item"  href="#">Summer</a>
-          <a class="dropdown-item"  href="#">Fall</a>
+            <div class="dropdown-item">
+              <input type="submit" value="Apply">
+            </div>
+            {% for name,tagList in tags %}
+              {% if name=='season' %}
+                {% for tag in tagList %}
+                  <div class="dropdown-item form-check pl-5">
+                    {% if request.form.getlist('seasonCheckboxes') != None %}
+                      {% if tag in request.form.getlist('seasonCheckboxes') %}
+                        <input class="form-check-input" type="checkbox" name="seasonCheckboxes" value="{{ tag }}" id="seasonCheck" checked>
+                      {% else %}
+                        <input class="form-check-input" type="checkbox" name="seasonCheckboxes" value="{{ tag }}" id="seasonCheck">
+                      {% endif %}
+                    {% else %}
+                      <input class="form-check-input" type="checkbox" name="seasonCheckboxes" value="{{ tag }}" id="seasonCheck">
+                    {% endif %}
+                    <label class="form-check-label" for="seasonCheck">
+                      {{ tag }}
+                    </label>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
         </ul>
       </div>
 
@@ -74,9 +127,29 @@
           Airing Status <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <a class="dropdown-item" href="#">Finished Airing</a>
-          <a class="dropdown-item"  href="#">Currently Airing</a>
-          <a class="dropdown-item"  href="#">Not yet aired</a>
+            <div class="dropdown-item">
+              <input type="submit" value="Apply">
+            </div>
+            {% for name,tagList in tags %}
+              {% if name=='status' %}
+                {% for tag in tagList %}
+                  <div class="dropdown-item form-check pl-5">
+                    {% if request.form.getlist('statusCheckboxes') != None %}
+                      {% if tag in request.form.getlist('statusCheckboxes') %}
+                        <input class="form-check-input" type="checkbox" name="statusCheckboxes" value="{{ tag }}" id="statusCheck" checked>
+                      {% else %}
+                        <input class="form-check-input" type="checkbox" name="statusCheckboxes" value="{{ tag }}" id="statusCheck">
+                      {% endif %}
+                    {% else %}
+                      <input class="form-check-input" type="checkbox" name="statusCheckboxes" value="{{ tag }}" id="statusCheck">
+                    {% endif %}
+                    <label class="form-check-label" for="statusCheck">
+                      {{ tag }}
+                    </label>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
         </ul>
       </div>
 
@@ -86,23 +159,42 @@
           Format Type <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-          <a class="dropdown-item" href="#">Movie</a>
-          <a class="dropdown-item"  href="#">Music</a>
-          <a class="dropdown-item"  href="#">TV</a>
-          <a class="dropdown-item"  href="#">Special</a>
-          <a class="dropdown-item"  href="#">ONA</a>
-          <a class="dropdown-item"  href="#">OVA</a>
-          <a class="dropdown-item"  href="#">Unknown</a>
+            <div class="dropdown-item">
+              <input type="submit" value="Apply">
+            </div>
+            {% for name,tagList in tags %}
+              {% if name=='type' %}
+                {% for tag in tagList %}
+                  <div class="dropdown-item form-check pl-5">
+                    {% if request.form.getlist('typeCheckboxes') != None %}
+                      {% if tag in request.form.getlist('typeCheckboxes') %}
+                        <input class="form-check-input" type="checkbox" name="typeCheckboxes" value="{{ tag }}" id="typeCheck" checked>
+                      {% else %}
+                        <input class="form-check-input" type="checkbox" name="typeCheckboxes" value="{{ tag }}" id="typeCheck">
+                      {% endif %}
+                    {% else %}
+                      <input class="form-check-input" type="checkbox" name="typeCheckboxes" value="{{ tag }}" id="typeCheck">
+                    {% endif %}
+                    <label class="form-check-label" for="typeCheck">
+                      {{ tag }}
+                    </label>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+        </ul>
         </ul>
       </div>
 
       <!--Order By-->
-      <div class="btn-group dropdown float-right">
+      <div class="btn-group dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Order By
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <form action="{{ url_for('main.explore') }}" method="post" onsubmit="">
+            <div class="dropdown-item">
+              <input type="submit" value="Apply">
+            </div>
             <div class="dropdown-item form-check pl-5">
               {% if request.form.get('ratingRadios') == 'highest rating' %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating" checked>
@@ -135,7 +227,7 @@
             </div>
             <div class="dropdown-divider"></div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('timeRadios') == 'recent' or request.form.get('timeRadios') == None %}
+              {% if request.form.get('timeRadios') == 'recent'%}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent">
@@ -154,18 +246,48 @@
                 Oldest
               </label>
             </div>
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
+            <div class="dropdown-item form-check pl-5">
+              {% if request.form.get('timeRadios') == 'Any Time' or request.form.get('timeRadios') == None %}
+              <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios3" value="anytime" checked>
+              {% else %}
+              <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios3" value="anytime">
+              {% endif %}
+              <label class="form-check-label" for="timeRadios3">
+                Any Time
+              </label>
             </div>
-          </form>
         </div>
       </div>
     </div>
+    </form>
   </div>
 
-
-  <!--Selected tags / filters-->
-
+  <!--Active tags / filters-->
+  {% if (request.form.getlist('genreCheckboxes')|length + request.form.getlist('yearCheckboxes')|length +
+  request.form.getlist('seasonCheckboxes')|length +
+  request.form.getlist('statusCheckboxes')|length +
+   request.form.getlist('typeCheckboxes')|length) > 0 %}
+  <div class="row">
+    <div class="col-md-12 mb-5">
+      <i class="fa fa-tags" aria-hidden="true"></i>
+        {% for tag in request.form.getlist('genreCheckboxes') %}
+          <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
+        {% endfor %}
+        {% for tag in request.form.getlist('yearCheckboxes') %}
+          <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
+        {% endfor %}
+        {% for tag in request.form.getlist('seasonCheckboxes') %}
+          <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
+        {% endfor %}
+        {% for tag in request.form.getlist('statusCheckboxes') %}
+          <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
+        {% endfor %}
+        {% for tag in request.form.getlist('typeCheckboxes') %}
+          <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
+        {% endfor %}
+    </div>
+  </div>
+  {% endif %}
 
   <!--Anime Grid: X by 4 grid-->
   <div class="row text-center">
@@ -180,9 +302,14 @@
       <tr>
         <td>
           {% if prev_url %}
+            <a href="{{ first_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+              </button>
+            </a>
             <a href="{{ prev_url }}">
               <button type="button" class="btn btn-dark">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                <i class="fa fa-angle-left" aria-hidden="true"></i> Back
               </button>
             </a>
           {% endif %}
@@ -191,7 +318,12 @@
           {% if next_url %}
             <a href="{{ next_url }}">
               <button type="button" class="btn btn-dark">
-                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </button>
+            </a>
+            <a href="{{ last_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
               </button>
             </a>
           {% endif %}
@@ -200,7 +332,5 @@
     </table>
   </row>
 
-
 </div>
-
 {% endblock %}

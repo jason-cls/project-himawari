@@ -73,7 +73,7 @@ def reviews():
                            prev_url=prev_url, next_url=next_url)
 
 
-@main.route('/explore')
+@main.route('/explore', methods=['GET', 'POST'])
 @admin_required  # Just example for how to use this admin decorator
 def explore():
     n_anime_per_page = 12
@@ -81,30 +81,33 @@ def explore():
     q_anime = Anime.query.order_by(Anime.id)
 
     # Get tags
-    tags = {'genres':[],
-            'year':[],
-            'season':['Winter','Spring','Summer','Fall'],
-            'status':['Finished Airing','Currently Airing','Not yet aired'],
-            'type':['Movie','Music','TV','Special','ONA','OVA','Unknown']}
+    tags = {'genres': [],
+            'year': [],
+            'season': ['Winter','Spring','Summer','Fall'],
+            'status': ['Finished Airing','Currently Airing','Not yet aired'],
+            'type': ['Movie','Music','TV','Special','ONA','OVA','Unknown']}
     genres_col = Anime.query.with_entities(Anime.genres).distinct().all()
     for row in genres_col:
         genres = row[0].strip('[]').replace("'", "").split(',')
         for genre in genres:
-            if genre not in tags['genres']:
-                tags['genres'].append(genre)
+            if genre.strip() not in tags['genres']:
+                tags['genres'].append(genre.strip())
+    tags['genres'].sort()
 
     premiered_col = Anime.query.with_entities(Anime.premiered).distinct().all()
     for row in premiered_col:
         if row[0] != None:
             year = row[0].split()[1]
-            print(year)
             if year not in tags['year']:
                 tags['year'].append(year)
     tags['year'].sort()
 
-    # Filters
-
-
+    # Filters / active tags
+    activeTags = {'genres': [],
+                  'year': [],
+                  'season': [],
+                  'status': [],
+                  'type': []}
 
     # Pagination
     q_anime = q_anime.paginate(page, n_anime_per_page, True)
@@ -116,5 +119,8 @@ def explore():
         next_url = url_for('main.explore', page=q_anime.next_num)
     else:
         next_url = None
-    return render_template('explore.html', title="Browse Anime", animes=q_anime.items, tags=tags,
-                           prev_url=prev_url, next_url=next_url)
+    first_url = url_for('main.explore', page=1)
+    last_url = url_for('main.explore', page=q_anime.pages)
+    return render_template('explore.html', title="Browse Anime", animes=q_anime.items,
+                           tags=tags.items(), activeTags=activeTags.items(),
+                           first_url=first_url, last_url=last_url, prev_url=prev_url, next_url=next_url)
