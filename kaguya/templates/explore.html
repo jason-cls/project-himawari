@@ -29,16 +29,13 @@
           Genres <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
-            </div>
             <input class="form-control" id="myInput" type="text" placeholder="Search...">
             {% for name,tagList in tags %}
               {% if name=='genres' %}
                 {% for tag in tagList %}
                   <div class="dropdown-item form-check pl-5">
-                    {% if request.form.getlist('genreCheckboxes') != None %}
-                      {% if tag in request.form.getlist('genreCheckboxes') %}
+                    {% if activeFilters.get('genreCheckboxes') != None %}
+                      {% if tag in activeFilters.get('genreCheckboxes') %}
                         <input class="form-check-input" type="checkbox" name="genreCheckboxes" value="{{ tag }}" id="genreCheck" checked>
                       {% else %}
                         <input class="form-check-input" type="checkbox" name="genreCheckboxes" value="{{ tag }}" id="genreCheck">
@@ -62,16 +59,13 @@
           Year <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
-            </div>
             <input class="form-control" id="yearInput" type="text" placeholder="Search...">
             {% for name,tagList in tags %}
               {% if name=='year' %}
                 {% for tag in tagList %}
                   <div class="dropdown-item form-check pl-5">
-                    {% if request.form.getlist('yearCheckboxes') != None %}
-                      {% if tag in request.form.getlist('yearCheckboxes') %}
+                    {% if activeFilters.get('yearCheckboxes') != None %}
+                      {% if tag in activeFilters.get('yearCheckboxes') %}
                         <input class="form-check-input" type="checkbox" name="yearCheckboxes" value="{{ tag }}" id="yearCheck" checked>
                       {% else %}
                         <input class="form-check-input" type="checkbox" name="yearCheckboxes" value="{{ tag }}" id="yearCheck">
@@ -95,15 +89,12 @@
           Season <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
-            </div>
             {% for name,tagList in tags %}
               {% if name=='season' %}
                 {% for tag in tagList %}
                   <div class="dropdown-item form-check pl-5">
-                    {% if request.form.getlist('seasonCheckboxes') != None %}
-                      {% if tag in request.form.getlist('seasonCheckboxes') %}
+                    {% if activeFilters.get('seasonCheckboxes') != None %}
+                      {% if tag in activeFilters.get('seasonCheckboxes') %}
                         <input class="form-check-input" type="checkbox" name="seasonCheckboxes" value="{{ tag }}" id="seasonCheck" checked>
                       {% else %}
                         <input class="form-check-input" type="checkbox" name="seasonCheckboxes" value="{{ tag }}" id="seasonCheck">
@@ -127,15 +118,12 @@
           Airing Status <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
-            </div>
             {% for name,tagList in tags %}
               {% if name=='status' %}
                 {% for tag in tagList %}
                   <div class="dropdown-item form-check pl-5">
-                    {% if request.form.getlist('statusCheckboxes') != None %}
-                      {% if tag in request.form.getlist('statusCheckboxes') %}
+                    {% if activeFilters.get('statusCheckboxes') != None %}
+                      {% if tag in activeFilters.get('statusCheckboxes') %}
                         <input class="form-check-input" type="checkbox" name="statusCheckboxes" value="{{ tag }}" id="statusCheck" checked>
                       {% else %}
                         <input class="form-check-input" type="checkbox" name="statusCheckboxes" value="{{ tag }}" id="statusCheck">
@@ -159,15 +147,12 @@
           Format Type <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
-            </div>
             {% for name,tagList in tags %}
               {% if name=='type' %}
                 {% for tag in tagList %}
                   <div class="dropdown-item form-check pl-5">
-                    {% if request.form.getlist('typeCheckboxes') != None %}
-                      {% if tag in request.form.getlist('typeCheckboxes') %}
+                    {% if activeFilters.get('typeCheckboxes') != None %}
+                      {% if tag in activeFilters.get('typeCheckboxes') %}
                         <input class="form-check-input" type="checkbox" name="typeCheckboxes" value="{{ tag }}" id="typeCheck" checked>
                       {% else %}
                         <input class="form-check-input" type="checkbox" name="typeCheckboxes" value="{{ tag }}" id="typeCheck">
@@ -192,11 +177,8 @@
           Order By
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <div class="dropdown-item">
-              <input type="submit" value="Apply">
-            </div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('ratingRadios') == 'highest rating' %}
+              {% if activeFilters.get('ratingRadios')[0] == 'highest rating' %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating">
@@ -206,7 +188,7 @@
               </label>
             </div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('ratingRadios') == 'lowest rating' %}
+              {% if activeFilters.get('ratingRadios')[0] == 'lowest rating' %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="lowest rating" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="lowest rating">
@@ -216,7 +198,7 @@
               </label>
             </div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('ratingRadios') == 'any rating' or request.form.get('ratingRadios') == None %}
+              {% if activeFilters.get('ratingRadios')[0] == 'any rating' or activeFilters.get('ratingRadios') == None %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios3" value="any rating" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios3" value="any rating">
@@ -227,27 +209,27 @@
             </div>
             <div class="dropdown-divider"></div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('timeRadios') == 'recent'%}
+              {% if activeFilters.get('timeRadios')[0] == 'recent'%}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent">
               {% endif %}
               <label class="form-check-label" for="timeRadios1">
-                Recent
+                Recent Addition
               </label>
             </div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('timeRadios') == 'oldest' %}
+              {% if activeFilters.get('timeRadios')[0] == 'oldest' %}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="oldest" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="oldest">
               {% endif %}
               <label class="form-check-label" for="timeRadios2">
-                Oldest
+                Oldest Addition
               </label>
             </div>
             <div class="dropdown-item form-check pl-5">
-              {% if request.form.get('timeRadios') == 'Any Time' or request.form.get('timeRadios') == None %}
+              {% if activeFilters.get('timeRadios')[0] == 'anytime' or activeFilters.get('timeRadios') == None %}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios3" value="anytime" checked>
               {% else %}
               <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios3" value="anytime">
@@ -258,36 +240,47 @@
             </div>
         </div>
       </div>
+      <div class="btn-group">
+        <input class="btn btn-success ml-5" type="submit" value="Apply Filters">
+      </div>
     </div>
     </form>
   </div>
 
   <!--Active tags / filters-->
-  {% if (request.form.getlist('genreCheckboxes')|length + request.form.getlist('yearCheckboxes')|length +
-  request.form.getlist('seasonCheckboxes')|length +
-  request.form.getlist('statusCheckboxes')|length +
-   request.form.getlist('typeCheckboxes')|length) > 0 %}
+  {% if 'genreCheckboxes' in activeFilters.keys() or 'yearCheckboxes' in activeFilters.keys() or 'seasonCheckboxes' in activeFilters.keys() or 'statusCheckboxes' in activeFilters.keys() or 'typeCheckboxes' in activeFilters.keys() %}
   <div class="row">
     <div class="col-md-12 mb-5">
       <i class="fa fa-tags" aria-hidden="true"></i>
-        {% for tag in request.form.getlist('genreCheckboxes') %}
+      {% if activeFilters.get('genreCheckboxes') %}
+        {% for tag in activeFilters.get('genreCheckboxes') %}
           <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
         {% endfor %}
-        {% for tag in request.form.getlist('yearCheckboxes') %}
+      {% endif %}
+      {% if activeFilters.get('yearCheckboxes') %}
+        {% for tag in activeFilters.get('yearCheckboxes') %}
           <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
         {% endfor %}
-        {% for tag in request.form.getlist('seasonCheckboxes') %}
+      {% endif %}
+      {% if activeFilters.get('seasonCheckboxes') %}
+        {% for tag in activeFilters.get('seasonCheckboxes') %}
           <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
         {% endfor %}
-        {% for tag in request.form.getlist('statusCheckboxes') %}
+      {% endif %}
+      {% if activeFilters.get('statusCheckboxes') %}
+        {% for tag in activeFilters.get('statusCheckboxes') %}
           <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
         {% endfor %}
-        {% for tag in request.form.getlist('typeCheckboxes') %}
+      {% endif %}
+      {% if activeFilters.get('typeCheckboxes') %}
+        {% for tag in activeFilters.get('typeCheckboxes') %}
           <button type="button" class="btn btn-dark btn-sm mb-1"> {{ tag }} </button>
         {% endfor %}
+      {% endif %}
     </div>
   </div>
   {% endif %}
+
 
   <!--Anime Grid: X by 4 grid-->
   <div class="row text-center">
@@ -331,6 +324,5 @@
       </tr>
     </table>
   </row>
-
 </div>
 {% endblock %}
