@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app, request, url_for, session
+from flask import Blueprint, render_template, current_app, request, url_for, session, redirect
 from flask_login import login_required
 from kaguya.decorators import admin_required, permission_required
 from kaguya.models import Anime, Review, UserAnime
@@ -25,7 +25,6 @@ def home():
     upcoming_anime = Anime.query.filter_by(premiered=upcoming_season).order_by(Anime.score.desc()) \
         .limit(n_anime).all()
     recent_reviews = Review.query.order_by(Review.datetime_created.desc()).limit(n_reviews).all()
-    session.clear()
     return render_template('home.html', title="Home Page",
                            seasonal_anime=seasonal_anime, popular_anime=popular_anime,
                            upcoming_anime=upcoming_anime, recent_reviews=recent_reviews)
@@ -188,3 +187,10 @@ def explore():
     return render_template('explore.html', title="Browse Anime", animes=q_anime.items,
                            tags=tags.items(), activeFilters=activeFilters,
                            first_url=first_url, last_url=last_url, prev_url=prev_url, next_url=next_url)
+
+
+@main.route('/clearFilters', methods=['GET', 'POST'])
+def clearFilters():
+    if session.get('filterForm'):
+        session.pop('filterForm')
+    return redirect(url_for('main.explore'))
