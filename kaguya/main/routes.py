@@ -84,7 +84,7 @@ def reviews():
 
 @main.route('/explore', methods=['GET', 'POST'])
 def explore():
-    n_anime_per_page = 12
+    n_anime_per_page = current_app.config['NUM_ANIME_PER_PAGE']
     page = request.args.get('page', 1, type=int)
     q_anime = Anime.query.order_by(Anime.id)
 

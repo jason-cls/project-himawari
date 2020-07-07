@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
+from elasticsearch import Elasticsearch
+
 
 # Extensions
 db = SQLAlchemy()
@@ -34,6 +36,10 @@ def create_app(create_db=False):
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(errors)
+
+    # Search engine setup
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
 
     # Login functionality
     login_manager.init_app(app)
