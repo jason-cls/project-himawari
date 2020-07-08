@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='explore.css') }}">
+</head>
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+  <!--Search Bar-->
+  <div class="row">
+    <div class="col-md-8 col-centered">
+      {% if g.search_form %}
+      <form method="get" action="{{ url_for('main.search') }}">
+        <div class="input-group mb-5 mt-5">
+          {{ g.search_form.q(class='form-control border-primary', placeholder=g.search_form.q.label.text) }}
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </form>
+      {% endif %}
+<!--      <div class="input-group mb-5 mt-5">-->
+<!--        <input id="searchbar" type="text" placeholder="Search Anime" class="form-control border-primary">-->
+<!--        <div class="input-group-append">-->
+<!--          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+  </div>
+
+  <h2 class="mb-3">Search Results</h2>
+
+  <!--Anime Grid: X by 4 grid-->
+  <div class="row text-center">
+    {% for anime in animes %}
+      {% include '_animeRow4.html' %}
+    {% endfor %}
+  </div>
+
+  <!--Page Navigation-->
+  <row>
+    <table style="width:100%" class="mb-3">
+      <tr>
+        <td>
+          {% if prev_url %}
+            <a href="{{ first_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+              </button>
+            </a>
+            <a href="{{ prev_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> Back
+              </button>
+            </a>
+          {% endif %}
+        </td>
+        <td class="text-right align-right">
+          {% if next_url %}
+            <a href="{{ next_url }}">
+              <button type="button" class="btn btn-dark">
+                Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </button>
+            </a>
+            <a href="{{ last_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+              </button>
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </row>
+</div>
+{% endblock %}

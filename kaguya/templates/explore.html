@@ -10,12 +10,16 @@
   <!--Search Bar-->
   <div class="row">
     <div class="col-md-8 col-centered">
-      <div class="input-group mb-5 mt-5">
-        <input id="searchbar" type="text" placeholder="Search Anime" class="form-control border-primary">
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+      {% if g.search_form %}
+      <form method="get" action="{{ url_for('main.search') }}">
+        <div class="input-group mb-5 mt-5">
+          {{ g.search_form.q(class='form-control border-primary', placeholder=g.search_form.q.label.text) }}
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+          </div>
         </div>
-      </div>
+      </form>
+      {% endif %}
     </div>
   </div>
 

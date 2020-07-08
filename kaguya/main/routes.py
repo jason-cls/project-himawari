@@ -1,12 +1,19 @@
-from flask import Blueprint, render_template, current_app, request, url_for, session, redirect
+from flask import Blueprint, render_template, current_app, request, url_for, session, redirect, g
 from flask_login import login_required
 from kaguya.decorators import admin_required, permission_required
 from kaguya.models import Anime, Review, UserAnime
+from kaguya.main.forms import SearchForm
 from kaguya import db
 from sqlalchemy import func, desc
+import math
 
 
 main = Blueprint('main', __name__)
+
+
+@main.before_app_request
+def before_request():
+    g.search_form = SearchForm()
 
 
 @main.route('/')
@@ -194,3 +201,26 @@ def clearFilters():
     if session.get('filterForm'):
         session.pop('filterForm')
     return redirect(url_for('main.explore'))
+
+
+@main.route('/search')
+def search():
+    n_anime_per_page = current_app.config['NUM_ANIME_PER_PAGE']
+    page = request.args.get('page', 1, type=int)
+
+    # Search query
+    if not g.search_form.validate():
+        return redirect(url_for('main.explore'))
+
+    q_anime, total = Anime.search(g.search_form.q.data, page, n_anime_per_page)
+    next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1) if total > page * n_anime_per_page \
+        else None
+    prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1) if page > 1 \
+        else None
+    first_url = url_for('main.search', q=g.search_form.q.data, page=1)
+    last_pg = int(math.ceil(total / n_anime_per_page))
+    last_pg = 1 if last_pg == 0 else last_pg
+    last_url = url_for('main.search', q=g.search_form.q.data, page=last_pg)
+
+    return render_template('search.html', title="Search Anime", animes=q_anime,
+                           first_url=first_url, last_url=last_url, prev_url=prev_url, next_url=next_url)
