@@ -184,7 +184,7 @@ class UserAnime(db.Model):
 
 
 class Anime(db.Model, SearchableMixin):
-    __searchable__ = ['title', 'title_japanese', 'synopsis']
+    __searchable__ = ['title', 'title_japanese', 'synopsis', 'genres']
     id = db.Column(db.Integer, primary_key=True)
     datetime_created = db.Column(db.DateTime, nullable=False,
         default=datetime.utcnow)
