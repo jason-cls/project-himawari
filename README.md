@@ -4,6 +4,11 @@
 ```sh
 python run.py
 ```
+### External Prerequisites:
+1. [Install Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html#install-elasticsearch)
+ for website search functionality.
+2. [Run Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/starting-elasticsearch.html)
+ as instructed (prior to launching the web application).
 
 ### How to initialize database migrations:
 

@@ -1,0 +1,39 @@
+.col-centered {
+  float: none;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.figure > a > .img-thumbnail {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  border-radius: 5%;
+  padding: 0px;
+}
+
+.figure {
+  margin-bottom: 0px;
+}
+
+.figure-caption{
+  margin-bottom: 5vh;
+}
+
+.dropdown-menu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+ .figure-caption > a, a:hover, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+ }
+
+#myInput #yearInput {
+    padding: 20px;
+    margin-top: -6px;
+    border: 0;
+    border-radius: 0;
+    background: #f1f1f1;
+}

@@ -285,6 +285,7 @@
                           {% endif %}
                     </div>
                 </div>
+                {% if anime.episodes != 0 %}
                 <div class="col-md-9">
                     <h6 style="text-align:center">Completion Status</h6>
                     <div class="progress bg-secondary">
@@ -292,6 +293,7 @@
                         <div class="progress-bar bg-success" role="progressbar" style="width: {{ barWidth }}%" >&nbsp; {{ userEpisode }} / {{ anime.episodes }} episodes</div>
                     </div>
                 </div>
+                {% endif %}
             </div>
             {% endif %}
 

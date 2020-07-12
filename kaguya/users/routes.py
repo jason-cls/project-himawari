@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, url_for, flash
+from flask import Blueprint, render_template, redirect, request, url_for, flash, session
 from kaguya import db
 from kaguya.models import User, UserAnime, Anime, Permission
 from kaguya.decorators import permission_required
@@ -42,6 +42,7 @@ def login():
 @users.route('/logout')
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('main.home'))
 
 

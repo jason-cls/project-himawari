@@ -43,6 +43,11 @@
                   <i class="fa fa-info-circle" aria-hidden="true"></i> About
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('main.explore') }}">
+                  <i class="fa fa-book" aria-hidden="true"></i> Browse
+              </a>
+            </li>
             {% if current_user.is_anonymous %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('users.login') }}">
@@ -73,16 +78,20 @@
             {% endif %}
 
           </ul>
-            <form class="form-inline" style="margin-top: 10px">
-                <input class="form-control-sm mr-sm-2" type="search" placeholder="Search Anime" aria-label="Search">
-                <button class="btn btn-dark btn-sm" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-            </form>
+
         </div>
+          {% if g.search_form %}
+          <form class="form-inline mt-2" method="get" action="{{ url_for('main.search') }}">
+            <div class="form-group">
+              {{ g.search_form.q(size=20, class='form-control-sm mr-1', placeholder=g.search_form.q.label.text) }}
+            </div>
+            <button class="btn btn-dark" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </form>
+          {% endif %}
         </div>
     </nav>
 
     <!-- Main Content -->
-
     <main role="main" >
       <div class="row">
         <div class="col-md-12">

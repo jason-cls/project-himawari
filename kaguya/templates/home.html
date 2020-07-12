@@ -12,7 +12,7 @@
   <p class="lead" style="text-align:center">
     <b> Discover Anime.<br>Track your favorites. <br>Join the community.<br></b>
     <br>
-    <button type="button" class="btn btn-primary btn-lg">Start Exploring</button>
+    <a href="{{ url_for('main.explore') }}" class="btn btn-primary btn-lg"> Start Exploring </a>
   </p>
 </div>
 
@@ -23,10 +23,12 @@
     {% set carouselName = 'seasonal' %}
     {% set animeGroup = seasonal_anime %}
     <div class="container-fluid">
-      <table style="width:109%;">
+      <table style="width:110%;">
         <tr>
           <td><h2 class="pt-4 mb-4">Current Seasonal Anime</h2></td>
-          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+          <td class="align-right">
+            <a href="{{ url_for('main.explore') }}" class="btn btn-outline-dark btn-sm mt-5"> View More </a>
+          </td>
         </tr>
       </table>
       {% include '_carousel.html' %}
@@ -36,10 +38,12 @@
     {% set carouselName = 'popular' %}
     {% set animeGroup = popular_anime %}
     <div class="container-fluid">
-      <table style="width:120%;">
+      <table style="width:123%;">
         <tr>
           <td><h2 class="pt-4 mb-4">Popular Anime</h2></td>
-          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+          <td class="align-right">
+            <a href="{{ url_for('main.explore') }}" class="btn btn-outline-dark btn-sm mt-5"> View More </a>
+          </td>
         </tr>
       </table>
       {% include '_carousel.html' %}
@@ -49,10 +53,12 @@
     {% set carouselName = 'upcoming' %}
     {% set animeGroup = upcoming_anime %}
     <div class="container-fluid">
-      <table style="width:110.5%;">
+      <table style="width:112%;">
         <tr>
           <td><h2 class="pt-4 mb-4">Top Upcoming Anime</h2></td>
-          <td class="align-right"><button class="btn btn-outline-dark btn-sm mt-5">View All</button></td>
+          <td class="align-right">
+            <a href="{{ url_for('main.explore') }}" class="btn btn-outline-dark btn-sm mt-5"> View More </a>
+          </td>
         </tr>
       </table>
       {% include '_carousel.html' %}

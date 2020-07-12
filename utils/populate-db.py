@@ -79,6 +79,7 @@ class PopulateDB():
                 if index==(self.anime_limit-1):
                     break
             db.session.commit()
+            # Anime.reindex()
             self.logger.info("Anime DB updated!")
 
     def popFakeUsers(self):

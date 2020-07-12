@@ -17,7 +17,7 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <form action="{{ url_for('main.reviews') }}" method="post" onsubmit="">
               <div class="dropdown-item form-check pl-5">
-                {% if request.form.get('ratingRadios') == 'highest rating' %}
+                {% if activeFilters.get('ratingRadios')[0] == 'highest rating' %}
                 <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating" checked>
                 {% else %}
                 <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios1" value="highest rating">
@@ -27,7 +27,7 @@
                 </label>
               </div>
               <div class="dropdown-item form-check pl-5">
-                {% if request.form.get('ratingRadios') == 'lowest rating' %}
+                {% if activeFilters.get('ratingRadios')[0] == 'lowest rating' %}
                 <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="lowest rating" checked>
                 {% else %}
                 <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios2" value="lowest rating">
@@ -37,7 +37,7 @@
                 </label>
               </div>
               <div class="dropdown-item form-check pl-5">
-                {% if request.form.get('ratingRadios') == 'any rating' or request.form.get('ratingRadios') == None %}
+                {% if activeFilters.get('ratingRadios')[0] == 'any rating' or activeFilters.get('ratingRadios') == None %}
                 <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios3" value="any rating" checked>
                 {% else %}
                 <input class="form-check-input" type="radio" name="ratingRadios" id="ratingRadios3" value="any rating">
@@ -48,7 +48,7 @@
               </div>
               <div class="dropdown-divider"></div>
               <div class="dropdown-item form-check pl-5">
-                {% if request.form.get('timeRadios') == 'recent' or request.form.get('timeRadios') == None %}
+                {% if activeFilters.get('timeRadios')[0] == 'recent' or activeFilters.get('timeRadios') == None %}
                 <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent" checked>
                 {% else %}
                 <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios1" value="recent">
@@ -58,7 +58,7 @@
                 </label>
               </div>
               <div class="dropdown-item form-check pl-5">
-                {% if request.form.get('timeRadios') == 'oldest' %}
+                {% if activeFilters.get('timeRadios')[0] == 'oldest' %}
                 <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="oldest" checked>
                 {% else %}
                 <input class="form-check-input" type="radio" name="timeRadios" id="timeRadios2" value="oldest">
@@ -90,9 +90,14 @@
       <tr>
         <td>
           {% if prev_url %}
+            <a href="{{ first_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+              </button>
+            </a>
             <a href="{{ prev_url }}">
               <button type="button" class="btn btn-dark">
-                <i class="fa fa-chevron-left" aria-hidden="true"></i> Back
+                <i class="fa fa-angle-left" aria-hidden="true"></i> Back
               </button>
             </a>
           {% endif %}
@@ -101,7 +106,12 @@
           {% if next_url %}
             <a href="{{ next_url }}">
               <button type="button" class="btn btn-dark">
-                Next <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </button>
+            </a>
+            <a href="{{ last_url }}">
+              <button type="button" class="btn btn-dark">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
               </button>
             </a>
           {% endif %}
