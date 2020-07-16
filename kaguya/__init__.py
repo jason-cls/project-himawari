@@ -6,8 +6,6 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
 from elasticsearch import Elasticsearch
-from urllib.parse import urlparse
-import os
 
 
 # Extensions
@@ -40,15 +38,16 @@ def create_app(create_db=False):
     app.register_blueprint(errors)
 
     # Search engine setup
-    url = urlparse(os.environ.get('SEARCHBOX_URL'))
+    # app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+    #     if app.config['ELASTICSEARCH_URL'] else None
 
-    app.elasticsearch = Elasticsearch([url.host],
-        http_auth=(url.username, url.password),
-        scheme=url.scheme,
-        port=url.port) \
-        if app.config['SEARCHBOX_URL'] else None
+    if app.config['ELASTICSEARCH_URL']:
+        app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']])
+        app.elasticsearch.indices.create(index='anime', ignore=400)
+    else:
+        app.elasticsearch = None
 
-    # Login functionality
+        # Login functionality
     login_manager.init_app(app)
     login_manager.login_view = 'login'
 

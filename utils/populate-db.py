@@ -3,6 +3,8 @@ import os
 import logging
 import logging.config
 import pandas as pd
+import numpy as np
+from elasticsearch import TransportError
 from essential_generators import DocumentGenerator
 from random import randint
 from kaguya import db, create_app
@@ -56,6 +58,8 @@ class PopulateDB():
             self.logger.info("Number of data entries found in %s: %s", 
                 self.path, len(df_anime))
             df_anime['episodes'] = df_anime['episodes'].fillna(0).astype('int32')
+            df_anime['score'] = df_anime['score'].fillna(0).astype('float')
+            df_anime = df_anime.replace({np.nan: None})
             for index, row in df_anime.iterrows():
                 anime = Anime(
                     title=row['title'],
@@ -63,7 +67,7 @@ class PopulateDB():
                     type=row['type'],
                     episodes=row['episodes'],
                     rating=row['rating'],
-                    score=float(row['score']),
+                    score=row['score'],
                     status=row['status'],
                     premiered=row['premiered'],
                     broadcast=row['broadcast'],
@@ -78,8 +82,11 @@ class PopulateDB():
                 # Break if reached limit
                 if index==(self.anime_limit-1):
                     break
-            db.session.commit()
-            # Anime.reindex()
+            #Anime.reindex()
+            try:
+                db.session.commit()
+            except TransportError as e:
+                print(e.info)
             self.logger.info("Anime DB updated!")
 
     def popFakeUsers(self):
