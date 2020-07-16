@@ -39,12 +39,6 @@ def home():
                            upcoming_anime=upcoming_anime, recent_reviews=recent_reviews)
 
 
-@main.route('/about')
-@admin_required  # Just example for how to use this admin decorator
-def about():
-    return render_template('base.html', title="Home Page")
-
-
 @main.route('/reviews', methods=['GET', 'POST'])
 def reviews():
     n_reviews_per_page = current_app.config['NUM_REVIEWS_PER_PAGE']

@@ -11,8 +11,8 @@ class Config(object):
     ADMIN_EMAIL = 'admin@admin.com'
     NUM_HOMEPAGE_REVIEWS = 6  # Number of review to display on homepage
     NUM_CAROUSEL_ANIME = 12   # Number of anime to display per carousel (4 items per slide, 3 slides)
-    CURRENT_SEASON = "Fall 2004"
-    UPCOMING_SEASON = "Spring 2005"
+    CURRENT_SEASON = "Summer 2020"
+    UPCOMING_SEASON = "Fall 2020"
     NUM_REVIEWS_PER_PAGE = 6
     NUM_ANIME_PER_PAGE = 12
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL') or 'http://localhost:9200'
