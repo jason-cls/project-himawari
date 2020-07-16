@@ -1,6 +1,8 @@
 # Project-Himawari
+A Flask app which allows users to browse anime, track their favorites, and leave reviews.  
+Web app currently deployed at http://kaguya-net.herokuapp.com 
 
-### How to run kaguya:
+### How to run kaguya locally:
 ```sh
 python run.py
 ```
