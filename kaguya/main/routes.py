@@ -27,6 +27,7 @@ def home():
     seasonal_anime = Anime.query.filter_by(premiered=current_season).limit(n_anime).all()
     popular_anime = Anime.query.join(UserAnime) \
         .filter(~Anime.genres.contains('Hentai')) \
+        .filter(~Anime.genres.contains('Music')) \
         .group_by(UserAnime.anime_id)\
         .order_by(desc(func.count(UserAnime.anime_id)))\
         .limit(n_anime).all()
