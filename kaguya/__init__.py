@@ -38,8 +38,8 @@ def create_app(create_db=False):
     app.register_blueprint(errors)
 
     # Search engine setup
-    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
-        if app.config['ELASTICSEARCH_URL'] else None
+    app.elasticsearch = Elasticsearch([app.config['SEARCHBOX_URL']]) \
+        if app.config['SEARCHBOX_URL'] else None
 
     # Login functionality
     login_manager.init_app(app)

@@ -15,4 +15,4 @@ class Config(object):
     UPCOMING_SEASON = "Spring 2005"
     NUM_REVIEWS_PER_PAGE = 6
     NUM_ANIME_PER_PAGE = 12
-    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL') or 'http://localhost:9200'
+    SEARCHBOX_URL = os.environ.get('SEARCHBOX_URL') or 'http://localhost:9200'  #for elasticsearch
